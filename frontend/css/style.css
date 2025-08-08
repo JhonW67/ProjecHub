@@ -3,3 +3,21 @@
     padding: 0;
     font-family: Inter;    
 }
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+.main-bg {
+  background-size: cover;
+  background-position: center center; 
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
