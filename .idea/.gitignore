@@ -5,4 +5,7 @@ target/
 .idea/
 *.iml
 *.log
+
+# Arquivos sensíveis
+
 *.yaml
