@@ -11,5 +11,11 @@ docs: documentação
 
 refactor: refatoração de código
 
+# Dev-setup
+codigo de inicialização do projeto:
+
+docker-compose up -d (--build) -- se for primeira vez 
+
+mvn spring-boot:run (rodar a aplicação backend)
 
 Acesso PGadm:https//localhost:5050 

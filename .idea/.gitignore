@@ -5,4 +5,8 @@ target/
 .idea/
 *.iml
 *.log
+
+# Arquivos sensíveis
+src/main/resources/.env
+
 *.yaml
