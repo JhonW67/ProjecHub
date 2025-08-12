@@ -1,12 +1,15 @@
-
 spring:
-   application:
-      name: projectHub
-
-spring.datasource.url=jdbc:postgresql://localhost:5432/projecthubdb
-spring.datasource.username=admin
-spring.datasource.password=admin
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+  application:
+    name: projectHub
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true

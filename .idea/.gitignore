@@ -7,5 +7,6 @@ target/
 *.log
 
 # Arquivos sensíveis
+src/main/resources/.env
 
 *.yaml
