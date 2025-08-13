@@ -1,12 +1,12 @@
 services:
   db:
     image: postgres:17
-    container_name: postgres_container
+    container_name: projecthub-postgres
     restart: always
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: projecthubdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: projecthub
     ports:
       - "5432:5432"
     volumes:
