@@ -1,35 +1,43 @@
 package com.ProjectHub.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.Set;
-import java.util.List;
-
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email", name = "users_email")
+}, indexes ={
+        @Index(name = "users_name_idx", columnList = "name"),
+        @Index(name = "users_email_idx", columnList = "email")
+})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 // essa classe representa o modelo de usuário
 // que será persistido no banco de dados
 public class UserModel extends IdModel {
-    @Column(nullable = false)
+    @Column(columnDefinition = "varchar(255) not null")
     private String name;
-    @Column(nullable = false, unique = true)
+    @Column(columnDefinition = "varchar(255) not null", unique = true)
     private String email;
     @Column(nullable = false)
     private String password_hash;
+    @ManyToOne
+    @JoinColumn(name="roles_id", referencedColumnName = "id", foreignKey = @ForeignKey(
+            name = "fk_users_roles"
+    ))
+    private Roles roles; // pode ser "admin" ou "aluno" ou "professor"
     @OneToMany
-    @JoinColumn(name="user_id")
-    private Set<Roles> roles; // pode ser "admin" ou "aluno" ou "professor"
+    @JoinColumn(name = "project_members_id", referencedColumnName = "id", foreignKey = @ForeignKey(
+            name = "fk_users_project_members"
+    ))
+    private Set<ProjectMember> projectMembers; // lista de projetos em que o usuário está envolvido
     private String course; // curso do usuário, se aplicável
     private String registration; // matrícula do usuário, se aplicável
     private short  semester; // semestre do usuário, se aplicável
@@ -39,4 +47,5 @@ public class UserModel extends IdModel {
     private Instant createdAt;
     @UpdateTimestamp
     private Instant updatedAt;
+
 }
