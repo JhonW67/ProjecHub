@@ -13,6 +13,8 @@ import java.time.Instant;
 @Entity
 @Table(name = "projects")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ProjectModel extends IdModel {
     @Column(columnDefinition = "varchar(255) not null")
