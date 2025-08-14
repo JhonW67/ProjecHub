@@ -11,13 +11,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-               .csrf(csrf -> csrf.disable()) // Desativa proteção CSRF (para testes)
+              .csrf(csrf -> csrf.disable()) // Desativa CSRF para facilitar testes
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Libera todas as rotas
+                // Aqui você lista as rotas que quer BLOQUEAR
+                .requestMatchers("/admin/**").authenticated()
+                .requestMatchers("/private/**").authenticated()
+                
+                // Todas as outras ficam liberadas
+                .anyRequest().permitAll()
             )
-            .httpBasic(httpBasic -> httpBasic.disable()) // Desativa autenticação HTTP Basic
-            .formLogin(form -> form.disable()); // Desativa formulário de login
-
+            .httpBasic(httpBasic -> httpBasic.disable()) // Remove popup HTTP Basic
+            .formLogin(form -> form.disable()); // Remove form padrão
         return http.build();
     }
 }
