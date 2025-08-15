@@ -1,5 +1,6 @@
-package com.ProjectHub.domain;
+package com.ProjectHub.domain.Entity;
 
+import com.ProjectHub.domain.IdModel;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,13 +18,13 @@ public class ProjectMember extends IdModel {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "project_id")
     )
-    private Set<ProjectModel> project;
+    private Set<Project> project;
     @ManyToMany
     @JoinTable(
             name = "project_member",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<UserModel> users;
+    private Set<User> users;
     private String roleInProject; // papel do usuário no projeto, ex: "desenvolvedor", "gerente", etc.
 }

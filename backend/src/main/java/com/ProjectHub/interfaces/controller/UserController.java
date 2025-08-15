@@ -1,9 +1,9 @@
-package com.ProjectHub.controller;
+package com.ProjectHub.interfaces.controller;
 
-import com.ProjectHub.domain.UserModel;
-import com.ProjectHub.domain.Roles;
-import com.ProjectHub.interfaces.UserRepository;
-import com.ProjectHub.interfaces.RoleRepository;
+import com.ProjectHub.domain.Entity.Roles;
+import com.ProjectHub.domain.Entity.User;
+import com.ProjectHub.interfaces.repository.UserRepository;
+import com.ProjectHub.interfaces.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -24,15 +24,10 @@ public class UserController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-    public UserController(UserRepository userRepository, RoleRepository roleRepository){
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
-
     @GetMapping
-    public List<UserModel> listarUsuarios(){
+    public List<UserResponse> listarUsuarios(){
         // Metodo para listar todos os usuários
-        return userRepository.findAll().stream();
+        return userRepository.findAll().stream()
                 .map(this::toResponse)
                 .toList();
     }
@@ -40,11 +35,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody @Valid UserCreateRequest req) {
         // valida email único (simples p/ o teste)
-        if (userRepository.existsByEmail(req.getEmail())) {
+        if (userRepository.existsById(req.getEmail())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
-        Role role = null;
+        Roles role = null;
         if (req.getRoleId() != null) {
             role = roleRepository.findById(req.getRoleId())
                     .orElseThrow(() -> new IllegalArgumentException("Role não encontrada"));
@@ -53,8 +48,8 @@ public class UserController {
         User user = User.builder()
                 .name(req.getName())
                 .email(req.getEmail())
-                .password(req.getPassword()) // DEPOIS trocamos por BCrypt
-                .role(role)
+                .password_hash(req.getPassword()) // DEPOIS trocamos por BCrypt
+                .roles(role)
                 .build();
 
         user = userRepository.save(user);
@@ -70,8 +65,8 @@ public class UserController {
                 .id(u.getId())
                 .name(u.getName())
                 .email(u.getEmail())
-                .role(u.getRole() != null ? u.getRole().getName() : null)
+                .role(u.getRole() != null ? u.getRole() : null)
                 .build();
     }
-    }
+
 }

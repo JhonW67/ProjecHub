@@ -1,4 +1,4 @@
-package com.ProjectHub.interfaces;
+package com.ProjectHub.interfaces.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -7,10 +7,16 @@ spring:
     password: admin
     driver-class-name: org.postgresql.Driver
   jpa:
+    database:
+        platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
         ddl-auto: update
         show-sql: true
   jwt:
+    public:
+      key: ${JWT_PUBLIC_KEY}
+    private:
+      key: ${JWT_PRIVATE_KEY}
     secret: ${JWT_SECRET}
-    expiration: ${JWT_EXPIRATION:86400}
+    expiration: ${JWT_EXPIRATION}

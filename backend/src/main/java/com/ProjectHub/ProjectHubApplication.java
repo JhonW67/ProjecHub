@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ProjectHubApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProjectHubApplication.class, args);
+
+            SpringApplication.run(ProjectHubApplication.class, args);
 	}
 
 }

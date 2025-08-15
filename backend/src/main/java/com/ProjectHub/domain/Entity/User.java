@@ -1,10 +1,14 @@
-package com.ProjectHub.domain;
+package com.ProjectHub.domain.Entity;
 
+import com.ProjectHub.domain.IdModel;
+import com.ProjectHub.interfaces.dto.LoginRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.swing.*;
 import java.time.Instant;
 import java.util.Set;
 @Data
@@ -21,31 +25,63 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 // essa classe representa o modelo de usuário
 // que será persistido no banco de dados
-public class UserModel extends IdModel {
+public class User extends IdModel {
+
     @Column(columnDefinition = "varchar(255) not null")
     private String name;
+
     @Column(columnDefinition = "varchar(255) not null", unique = true)
     private String email;
+
     @Column(nullable = false)
     private String password_hash;
+
     @ManyToOne
     @JoinColumn(name="roles_id", referencedColumnName = "id", foreignKey = @ForeignKey(
             name = "fk_users_roles"
     ))
     private Roles roles; // pode ser "admin" ou "aluno" ou "professor"
+
     @OneToMany
     @JoinColumn(name = "project_members_id", referencedColumnName = "id", foreignKey = @ForeignKey(
             name = "fk_users_project_members"
     ))
     private Set<ProjectMember> projectMembers; // lista de projetos em que o usuário está envolvido
+
     private String course; // curso do usuário, se aplicável
+
     private String registration; // matrícula do usuário, se aplicável
+
     private short  semester; // semestre do usuário, se aplicável
+
     private boolean isActive; // indica se o usuário está ativo ou não
+
     private String avatarUrl;
+
     @CreationTimestamp
     private Instant createdAt;
+
     @UpdateTimestamp
     private Instant updatedAt;
 
+    public String getRole() {
+        if (roles != null) {
+            return roles.getName();
+        }
+        return null; // ou lançar uma exceção, dependendo do caso de uso
+    }
+
+    @Getter
+    public String getName() {
+        return name;
+    }
+
+    @Setter
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(loginRequest.password(), this.password_hash);
+    }
 }
