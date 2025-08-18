@@ -1,10 +1,9 @@
-package com.ProjectHub.domain.Entity;
+package com.ProjectHub.domain.entity;
 
 import jakarta.persistence.*;
 
 import lombok.Data;
 
-import javax.swing.*;
 import java.util.Set;
 
 @Data

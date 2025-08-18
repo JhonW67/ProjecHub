@@ -1,4 +1,4 @@
-package com.ProjectHub.domain.Entity;
+package com.ProjectHub.domain.entity;
 
 import com.ProjectHub.domain.IdModel;
 import com.ProjectHub.interfaces.dto.LoginRequest;
@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.swing.*;
 import java.time.Instant;
 import java.util.Set;
 @Data
@@ -83,5 +82,8 @@ public class User extends IdModel {
 
     public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(loginRequest.password(), this.password_hash);
+    }
+
+    public String getPassword() {
     }
 }

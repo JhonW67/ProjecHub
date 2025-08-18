@@ -1,7 +1,7 @@
-package com.ProjectHub.interfaces.repository;
+package com.ProjectHub.infrastructure.repository;
 
 import com.ProjectHub.domain.IdModel;
-import com.ProjectHub.domain.Entity.User;
+import com.ProjectHub.domain.entity.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,4 +16,6 @@ public interface UserRepository extends JpaRepository<User, IdModel> {
     Optional<User> findByUsername(String name);
 
     boolean existsById(@NotBlank @Email @Size(max = 160) String email);
+
+    boolean existsByEmail(@NotBlank @Email @Size(max = 160) String email);
 }

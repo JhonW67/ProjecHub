@@ -3,7 +3,7 @@ package com.ProjectHub.interfaces.controller;
 
 import com.ProjectHub.interfaces.dto.LoginRequest;
 import com.ProjectHub.interfaces.dto.LoginResponse;
-import com.ProjectHub.interfaces.repository.UserRepository;
+import com.ProjectHub.infrastructure.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

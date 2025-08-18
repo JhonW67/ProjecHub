@@ -1,6 +1,6 @@
-package com.ProjectHub.interfaces.repository;
+package com.ProjectHub.infrastructure.repository;
 
-import com.ProjectHub.domain.Entity.Roles;
+import com.ProjectHub.domain.entity.Roles;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Roles, Long> {

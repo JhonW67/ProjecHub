@@ -1,9 +1,9 @@
 package com.ProjectHub.interfaces.controller;
 
-import com.ProjectHub.domain.Entity.Roles;
-import com.ProjectHub.domain.Entity.User;
-import com.ProjectHub.interfaces.repository.UserRepository;
-import com.ProjectHub.interfaces.repository.RoleRepository;
+import com.ProjectHub.domain.entity.Roles;
+import com.ProjectHub.domain.entity.User;
+import com.ProjectHub.infrastructure.repository.UserRepository;
+import com.ProjectHub.infrastructure.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;

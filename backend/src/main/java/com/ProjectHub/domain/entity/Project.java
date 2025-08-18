@@ -1,4 +1,4 @@
-package com.ProjectHub.domain.Entity;
+package com.ProjectHub.domain.entity;
 
 import com.ProjectHub.domain.IdModel;
 import jakarta.persistence.*;

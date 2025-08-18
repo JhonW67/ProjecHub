@@ -1,10 +1,10 @@
 package com.ProjectHub.config;
 
 
-import com.ProjectHub.domain.Entity.Roles;
-import com.ProjectHub.domain.Entity.User;
-import com.ProjectHub.interfaces.repository.RoleRepository;
-import com.ProjectHub.interfaces.repository.UserRepository;
+import com.ProjectHub.domain.entity.Roles;
+import com.ProjectHub.domain.entity.User;
+import com.ProjectHub.infrastructure.repository.RoleRepository;
+import com.ProjectHub.infrastructure.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
