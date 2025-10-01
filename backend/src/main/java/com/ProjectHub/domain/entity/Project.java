@@ -17,10 +17,10 @@ import java.time.Instant;
 @EqualsAndHashCode(callSuper = true)
 public class Project extends IdModel {
 
-    @Column(columnDefinition = "varchar(255) not null")
+    @Column(nullable = false)
     private String name; // nome do projeto
 
-    @Column(columnDefinition = "varchar(255) not null")
+    @Column(nullable = false)
     private String description; // descrição do projeto
 
     private String bannerUrl; // URL do banner do projeto
@@ -32,13 +32,13 @@ public class Project extends IdModel {
 
     private String endDate; // data de término do projeto, se aplicável
 
-    @Column(columnDefinition = "int(2) not null")
+    @Column(nullable = false)
     private Integer semester; // semestre em que o projeto foi iniciado
 
-    @Column(columnDefinition = "varchar(255) not null")
+    @Column(nullable = false)
     private String course; // curso relacionado ao projeto, se aplicável
 
-    @Column(columnDefinition = "bool not null")
+    @Column(nullable = false)
     private boolean isActive; // indica se o projeto está ativo ou não
 
     @CreationTimestamp

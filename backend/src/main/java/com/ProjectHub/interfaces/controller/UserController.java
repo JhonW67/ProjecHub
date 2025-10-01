@@ -14,6 +14,7 @@ import com.ProjectHub.interfaces.dto.UserResponse;
 
 import java.util.List;
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -35,7 +36,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody @Valid UserCreateRequest req) {
         // valida email único (simples p/ o teste)
-        if (userRepository.existsById(req.getEmail())) {
+        if (userRepository.existsById(UUID.fromString(req.getEmail()))) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 

@@ -22,19 +22,21 @@ services:
     ports:
       - "5050:80"
 
-  backend-conteiner:
+  backend:
     build:
         context: .
         dockerfile: Dockerfile
     environment:
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_URL: ${DB_URL}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWS_VERIFICATION_KEY: ${JWT_PUBLIC_KEY}
+      SPRING_SECURITY_OAUTH2_AUTHORIZATIONSERVER_JWT_JWS_SIGNING_KEY: ${JWT_PRIVATE_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
     depends_on:
         - db
-    volumes:
-        - .:/app
-        - ~/.m2:/root/.m2
     ports:
       - "8080:8080"
 

@@ -2,18 +2,20 @@ package com.ProjectHub.domain.entity;
 
 import jakarta.persistence.*;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
+@Builder
 @Entity
 @Table(name = "roles") // Define o nome da tabela no banco de dados
 public class Roles {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)// O ID é gerado automaticamente pelo banco de dados
     private Long id;
-    @Column(columnDefinition = "varchar(50) not null", unique = true)
+    @Column(nullable = false, unique = true)
     private String roles;
     @OneToMany(orphanRemoval = true)// indica que a remoção de um usuário deve remover suas roles associadas
     @JoinColumn(name = "user_id", referencedColumnName = "id", foreignKey = @ForeignKey(

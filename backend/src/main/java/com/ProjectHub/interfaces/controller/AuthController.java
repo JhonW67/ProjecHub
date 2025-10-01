@@ -1,6 +1,6 @@
 package com.ProjectHub.interfaces.controller;
 
-import com.ProjectHub.application.services.AuthService;
+import com.ProjectHub.application.services.AuthServices;
 import com.ProjectHub.interfaces.dto.AuthResult;
 import com.ProjectHub.interfaces.dto.LoginRequest;
 import com.ProjectHub.interfaces.dto.RegisterRequest;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthServices authService;
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest request) {

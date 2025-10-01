@@ -2,6 +2,7 @@ package com.ProjectHub.domain.entity;
 
 import com.ProjectHub.domain.IdModel;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @Entity
 @Table(name = "projectMembers")
 @Data
+@Builder
 public class ProjectMember extends IdModel {
     @ManyToMany
     @JoinTable(

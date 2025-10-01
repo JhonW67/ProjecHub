@@ -26,10 +26,10 @@ import java.util.Set;
 // que será persistido no banco de dados
 public class User extends IdModel {
 
-    @Column(columnDefinition = "varchar(255) not null")
+    @Column(nullable = false)
     private String name;
 
-    @Column(columnDefinition = "varchar(255) not null", unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -70,20 +70,11 @@ public class User extends IdModel {
         return null; // ou lançar uma exceção, dependendo do caso de uso
     }
 
-    @Getter
-    public String getName() {
-        return name;
-    }
-
-    @Setter
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(loginRequest.password(), this.password_hash);
     }
 
     public String getPassword() {
+        return this.password_hash;
     }
 }

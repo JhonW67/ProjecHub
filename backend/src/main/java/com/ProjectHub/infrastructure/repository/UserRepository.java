@@ -8,14 +8,16 @@ import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, IdModel> {
     // Aqui você pode adicionar métodos personalizados de consulta, se necessário
 
     Optional<User> findByEmail(String email);
-    Optional<User> findByUsername(String name);
+    Optional<User> findByName(String name);
 
-    boolean existsById(@NotBlank @Email @Size(max = 160) String email);
+    boolean existsById(UUID id);
 
     boolean existsByEmail(@NotBlank @Email @Size(max = 160) String email);
+
 }
