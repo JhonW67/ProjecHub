@@ -1,0 +1,29 @@
+.p-menubar {
+    border: none;   
+    height: 75px; 
+    border-radius: 0px 0px 0px 0px;
+}
+
+.p-menubar-root-list {
+    margin: auto; /* aplica margem a cada item */
+}
+
+.p-menubar-end {
+    margin: 0;
+    width: 122px;
+}
+
+body {
+    background-color: rgba(1, 48, 110);
+    margin: 0;
+}
+
+.login-card {
+    background-color: white;
+    width: 45%;
+    margin: auto;
+    padding: 100px 50px;
+    border-radius: 20px;
+    margin-top: 180px;
+}
+
