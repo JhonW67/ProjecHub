@@ -4,7 +4,7 @@ import { Menubar } from 'primereact/menubar';
 import { Badge } from 'primereact/badge';
 import { Avatar } from 'primereact/avatar';  
 //importa a logo do project hub
-import logo from '../assets/projecthub-logo-icon.jpg'
+import logo from '../assets/projecthub-logo-icon.png'
 //importa o userNavigate para troca de páginas
 import { useNavigate } from 'react-router-dom';
 
@@ -41,9 +41,11 @@ export default function TemplateDemo() {
 
     const start = (
         <div className="flex align-items-center"> 
-            <Link to="/home" className="flex align-items-center">
-            <img alt="logo" src={logo} height="50"  className="mr-5 ml-6" ></img>
+            <div className='inline-flex align-items-center flex-none'>
+            <Link to="/home" className="link-nav" >
+            <img alt="logo" src={logo} height="50"  className="logo-navbar" ></img>
             </Link>
+            </div>
         </div>
     );
     const end = (

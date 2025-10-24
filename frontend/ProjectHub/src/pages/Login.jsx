@@ -19,12 +19,6 @@ const Login = () => {
             </div>
         </div>
         <div className="w-full md:w-2">
-            <Divider layout="vertical" className="hidden md:flex">
-                <b>OR</b>
-            </Divider>
-            <Divider layout="horizontal" className="flex md:hidden" align="center">
-                <b>OR</b>
-            </Divider>
         </div>
         <div className="w-full md:w-5 flex align-items-center justify-content-center py-5">
             <Button label="Sign Up" icon="pi pi-user-plus" severity="success" className="w-10rem"></Button>

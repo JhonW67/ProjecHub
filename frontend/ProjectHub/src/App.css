@@ -38,3 +38,34 @@ body {
 .add-project-button{
     margin-left: 10px;
 }
+.link-nav{
+  display: inline-flex;          /* inline-flex → exibe lado a lado, ajustando ao conteúdo */
+  align-items: center;           /* centraliza verticalmente o conteúdo */
+  flex: none;                    /* impede que o link cresça dentro de um flex container */
+  padding: 0;                    /* p-0 → sem padding */
+  margin: 0;
+  margin-right: 8rem;                     /* m-0 → sem margem */
+  text-decoration: none;         /* no-underline → remove sublinhado */
+  width: 0;                /* w-1 → em Tailwind equivale a 0.25rem (4px) */
+}
+
+.logo-navbar{
+    margin-left: 3rem;
+    transition: all 0.2s
+}
+
+.logo-navbar:hover{
+    /* opacity: 93%; */
+  filter: brightness(1.17);
+  transform: scale(1.05);
+}
+
+/* Efeito suave nos itens do Menubar */
+.p-menuitem-link {
+  transition: all 0.2s ease;
+}
+
+/* Ao passar o mouse: aumenta e brilha */
+.p-menuitem-link:hover {
+  transform: scale(1.06);
+}
