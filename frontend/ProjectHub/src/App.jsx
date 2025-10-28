@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/Home" element={<Home />} />        {/* Página inicial */}
         <Route path="/Login" element={<Login />} />  {/* Página de login */}
-        <Route path="/Projetos" element={<Projetos />} />  {/* Página de login */}
+        <Route path="/Projetos" element={<Projetos />} />  {/* Página de Projetos */}
       </Routes>
     </BrowserRouter>
   );
