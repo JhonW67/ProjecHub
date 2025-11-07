@@ -1,0 +1,14 @@
+package com.ProjectHub.repository;
+
+import com.ProjectHub.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+import java.util.Optional;
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<User, UUID> {
+    boolean existsByEmail(String email);
+    boolean existsByRegistration(String registration);
+    Optional<User> findByEmail(String email);
+}
