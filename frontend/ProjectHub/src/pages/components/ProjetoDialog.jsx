@@ -16,12 +16,8 @@ export default function ProjetoDialog({ visible, onHide, projetoSelecionado, onS
   const [descricao, setDescricao] = useState("");
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [erro, setErro] = useState(null);
-
-  const status = [
-    { id: 1, status: "Em Andamento" },
-    { id: 2, status: "Finalizado" },
-    { id: 3, status: "Cancelado" }
-  ];
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     if (projetoSelecionado) {
@@ -34,6 +30,28 @@ export default function ProjetoDialog({ visible, onHide, projetoSelecionado, onS
       cleanForm();
     }
   }, [projetoSelecionado, visible]);
+
+  useEffect(() => {
+  const fetchEvents = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/events");
+      if (!response.ok) throw new Error("Erro ao carregar eventos");
+      const data = await response.json();
+
+      const formatted = data.map((event) => ({
+        name: event.title,
+        id: event.eventId
+      }));
+
+      setEvents(formatted);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchEvents();
+}, []);
+
 
   const cleanForm = () => {
     setTitulo("");
@@ -52,7 +70,7 @@ export default function ProjetoDialog({ visible, onHide, projetoSelecionado, onS
       title: titulo,
       description: descricao,
       status: selectedStatus.status,
-      event: null,
+      event: selectedEvent ? { eventId: selectedEvent.id } : null,
       createdBy: null,
       createdAt: projetoSelecionado?.created_at || new Date()
     };
@@ -94,11 +112,21 @@ export default function ProjetoDialog({ visible, onHide, projetoSelecionado, onS
         <Dropdown
           value={selectedStatus}
           onChange={(e) => setSelectedStatus(e.value)}
-          options={status}
+          options={STATUS_OPTIONS}
           optionLabel="status"
           placeholder="Status"
           className={`w-full ${!selectedStatus && erro ? "p-invalid" : ""}`}
         />
+
+        <Dropdown
+          value={selectedEvent}
+          onChange={(e) => setSelectedEvent(e.value)}
+          options={events}
+          optionLabel="name"
+          placeholder="Selecione um evento"
+          className="w-full"
+        />
+
 
         <Button
           label={projetoSelecionado ? "Salvar Alterações" : "Cadastrar"}

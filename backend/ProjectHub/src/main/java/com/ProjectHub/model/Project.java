@@ -1,5 +1,6 @@
 package com.ProjectHub.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Timestamp;
@@ -29,6 +30,7 @@ public class Project {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
+    @JsonIgnoreProperties("projects")
     private Event event;
 
     @ManyToOne(fetch = FetchType.LAZY)

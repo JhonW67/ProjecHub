@@ -11,9 +11,22 @@ import ProjetoDialog from "./components/ProjetoDialog";
 import { Toast } from 'primereact/toast';
 
 
-const header = (
-  <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />
-);
+const getHeaderImage = (eventId) => {
+  if (!eventId) {
+    return <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />;
+  }
+
+  if (eventId.includes("7f839a36-cb5c-4dea-aee8-2024678f73bd")) {
+    return <img alt="Evento" src="src/assets/PEI-20251.png" />;
+  }
+
+  if (eventId.includes("dd71b2e6-afc1-4c56-ad8c-0c4b904d1019")) {
+    return <img alt="Evento" src="src/assets/PEI-20252.png" />;
+  }
+
+  return <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />;
+};
+
 
 const Projetos = () => {
   const [projects, setProjects] = useState([]);
@@ -21,14 +34,6 @@ const Projetos = () => {
   const [visible, setVisible] = useState(false);
   const [projetoSelecionado, setProjetoSelecionado] = useState(null);
   const toast = useRef(null);
-
-
-  /*useEffect(() => {
-    const timeout = setTimeout(() => {
-      setProjects(dataTeste);
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, []);*/
 
   useEffect(() => {
     const fetchProjects = async () =>{
@@ -44,52 +49,54 @@ const Projetos = () => {
     fetchProjects();
   }, []);
 
-  /*const handleSave = (projeto) => {
+  const handleSave = async (projeto) => {
+  try {
+    let savedProject = projeto;
+
     if (projetoSelecionado) {
+      const response = await fetch(`http://localhost:8080/api/projects/${projeto.projectId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(projeto),
+      });
+      savedProject = await response.json();
+
       setProjects((prev) =>
-        prev.map((p) => (p.id === projeto.id ? projeto : p))
+        prev.map((p) => (p.projectId === savedProject.projectId ? savedProject : p))
       );
     } else {
-      setProjects((prev) => [...prev, projeto]);
+      const response = await fetch("http://localhost:8080/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(projeto),
+      });
+      savedProject = await response.json();
+
+      setProjects((prev) => [...prev, savedProject]);
     }
+
+    toast.current?.show({
+      severity: 'success',
+      summary: projetoSelecionado ? 'Projeto atualizado' : 'Projeto criado',
+      detail: savedProject.title,
+      life: 3000
+    });
+
     setProjetoSelecionado(null);
-  };*/
-
-  const handleSave = async (projeto) => {
-    try{
-      let savedProject = projeto;
-
-      //Edição
-      if(projetoSelecionado){
-        const response = await fetch(`http://localhost:8080/api/projects/${projeto.projectId}`,{
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(projeto),
-        });
-        savedProject = await response.json();
-
-        setProjects((prev) =>
-        prev.map((p) => (p.id === savedProject.id ? savedProject : p))
-        );
-        //Criação
-      }else{
-        const response = await fetch("http://localhost:8080/api/projects" , {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(projeto)
-        });
-        savedProject = await response.json();
-
-        setProjects((prev) => [...prev, savedProject]);
-      }
-      setProjetoSelecionado(null);
-    }catch(error){
-      console.error(error)
-    }
+  } catch (error) {
+    console.error(error);
+    toast.current?.show({
+      severity: 'error',
+      summary: 'Erro',
+      detail: 'Não foi possível salvar o projeto.',
+      life: 3000
+    });
   }
+};
 
-  const projetosFiltrados = projects.filter((proj) =>
-    proj.title.toLowerCase().includes(busca.toLowerCase())
+
+const projetosFiltrados = projects.filter((proj) =>
+  proj.title.toLowerCase().includes(busca.toLowerCase())
   );
 
 const confirmDelete = (project) => {
@@ -99,19 +106,35 @@ const confirmDelete = (project) => {
     icon: 'pi pi-info-circle',
     acceptLabel: 'Sim',
     rejectLabel: 'Não',
-    accept: async  () => {
-      try{
+    accept: async () => {
+      try {
         const response = await fetch(`http://localhost:8080/api/projects/${project.projectId}`, {
-        method: "DELETE",
+          method: "DELETE",
         });
-        if(!response.ok) throw new Error('Erro ao excluir projeto')
+
+        if (!response.ok) throw new Error('Erro ao excluir projeto');
+
         setProjects((prev) => prev.filter((p) => p.projectId !== project.projectId));
-      }catch(error){
-        console.log(error)
+
+        toast.current?.show({
+          severity: 'success',
+          summary: 'Projeto excluído',
+          detail: `"${project.title}" foi removido com sucesso.`,
+          life: 3000
+        });
+      } catch (error) {
+        console.error(error);
+        toast.current?.show({
+          severity: 'error',
+          summary: 'Erro ao excluir',
+          detail: 'Não foi possível excluir o projeto.',
+          life: 3000
+        });
       }
     },
   });
 };
+
   return (
     <div>
       <Toast ref={toast} />
@@ -142,7 +165,7 @@ const confirmDelete = (project) => {
                     onClick={() => {setProjetoSelecionado(project);setVisible(true);}}/>
                     <Button onClick={() => confirmDelete(project)} icon="pi pi-times" label="Delete" className="p-button-danger"/>
                   </div>}
-                header={header}className="md:w-25rem">
+                header={getHeaderImage(project.event.eventId)}className="md:w-25rem">
                 <p className="m-0">{project.description}</p>
               </Card>
             </div>
