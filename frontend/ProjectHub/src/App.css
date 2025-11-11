@@ -72,7 +72,7 @@ body {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 3 cards por linha */
+  grid-template-columns: repeat(3, 1fr); /* 3 cards por linha */
   gap: 1rem; /* espaçamento entre os cards */
   justify-items: center; /* centraliza os cards na coluna */
 }
