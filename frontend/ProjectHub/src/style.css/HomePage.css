@@ -1,0 +1,341 @@
+/* HomePage.css */
+
+/* Variáveis de cores e estilos */
+:root {
+  --primary-blue: #1e40af;
+  --secondary-blue: #3b82f6;
+  --light-blue: #dbeafe;
+  --dark-blue: #1e3a8a;
+  --white: #ffffff;
+  --light-gray: #f8fafc;
+  --medium-gray: #e2e8f0;
+  --dark-gray: #64748b;
+  --text-dark: #1e293b;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --border-radius: 8px;
+}
+
+/* Reset e estilos base */
+/* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}*/
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background-color: var(--white);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Seção principal */
+.main {
+  width: 100%;
+}
+
+/* Seção de apresentação */
+.section-apresentacao {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+  color: var(--white);
+  padding: 100px 0;
+  text-align: center;
+}
+
+.section-apresentacao h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.section-apresentacao .highlight {
+  color: var(--light-blue);
+}
+
+.section-apresentacao h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+/* Botões */
+.btn-primary, .btn-secondary, .btn-outline {
+  padding: 12px 30px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--white);
+  color: var(--primary-blue);
+}
+
+.btn-primary:hover {
+  background-color: var(--light-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--white);
+  border: 2px solid var(--white);
+}
+
+.btn-secondary:hover {
+  background-color: var(--white);
+  color: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary-blue);
+  border: 2px solid var(--primary-blue);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Seção de estatísticas */
+.section.grid-estatisticas {
+  background-color: var(--light-gray);
+  padding: 80px 0;
+  text-align: center;
+}
+
+.section.grid-estatisticas h2 {
+  font-size: 2.5rem;
+  color: var(--primary-blue);
+  margin-bottom: 50px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.stat-item {
+  background-color: var(--white);
+  padding: 30px 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  color: var(--dark-gray);
+}
+
+/* Seção Por que usar */
+.section.porque {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.section.porque h2 {
+  font-size: 2.5rem;
+  color: var(--primary-blue);
+  margin-bottom: 50px;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.benefit-item {
+  padding: 30px 20px;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+  background-color: var(--light-blue);
+  transform: translateY(-5px);
+}
+
+.benefit-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.benefit-item h3 {
+  font-size: 1.5rem;
+  color: var(--primary-blue);
+  margin-bottom: 15px;
+}
+
+.benefit-item p {
+  color: var(--dark-gray);
+  line-height: 1.6;
+}
+
+/* Seção de cards de projetos */
+.section.cards {
+  background-color: var(--light-gray);
+  padding: 80px 0;
+}
+
+.section.cards h2 {
+  font-size: 2.5rem;
+  color: var(--primary-blue);
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.project-card {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-image {
+  height: 200px;
+  background-color: var(--medium-gray);
+  background-image: linear-gradient(45deg, var(--light-blue) 25%, transparent 25%, transparent 75%, var(--light-blue) 75%, var(--light-blue)), 
+                    linear-gradient(45deg, var(--light-blue) 25%, transparent 25%, transparent 75%, var(--light-blue) 75%, var(--light-blue));
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.project-content {
+  padding: 25px;
+}
+
+.project-content h3 {
+  font-size: 1.3rem;
+  color: var(--primary-blue);
+  margin-bottom: 10px;
+}
+
+.project-content p {
+  color: var(--dark-gray);
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background-color: var(--light-blue);
+  color: var(--primary-blue);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.section-center {
+  text-align: center;
+}
+
+/* Seção Venha Conhecer */
+.section.venha-conhecer {
+  padding: 100px 0;
+  text-align: center;
+  background-color: var(--primary-blue);
+  color: var(--white);
+}
+
+.cta-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.cta-section p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+  .stats-grid,
+  .benefits-grid,
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .section-apresentacao h1 {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid,
+  .benefits-grid,
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .section-apresentacao h1 {
+    font-size: 2.2rem;
+  }
+  
+  .section-apresentacao h3 {
+    font-size: 1.2rem;
+  }
+  
+  .section {
+    padding: 60px 0;
+  }
+}

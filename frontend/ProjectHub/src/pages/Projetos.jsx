@@ -5,7 +5,6 @@ import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { ProgressSpinner } from 'primereact/progressspinner';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import ProjetoDialog from "./components/ProjetoDialog";
 import { Toast } from 'primereact/toast';
