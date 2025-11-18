@@ -14,3 +14,13 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+
+// Registro do service worker 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('✅ Conexão com o serviceWorker estabelecida ✅'))
+      .catch(error => console.log('❌ Conexão com o serviceWorker falha ❌', error));
+  });
+}
+
