@@ -19,17 +19,24 @@ export default function ProjetoDialog({ visible, onHide, projetoSelecionado, onS
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
-  useEffect(() => {
+useEffect(() => {
     if (projetoSelecionado) {
       setTitulo(projetoSelecionado.title || "");
       setDescricao(projetoSelecionado.description || "");
       setSelectedStatus(
         STATUS_OPTIONS.find((s) => s.status === projetoSelecionado.status) || null
       );
+      if (projetoSelecionado.event && events.length > 0) {
+        const eventoEncontrado = events.find(e => e.id === projetoSelecionado.event.eventId);
+        setSelectedEvent(eventoEncontrado || null);
+      } else if (!projetoSelecionado.event) {
+         setSelectedEvent(null);
+      }
+      
     } else {
       cleanForm();
     }
-  }, [projetoSelecionado, visible]);
+  }, [projetoSelecionado, visible, events]);
 
   useEffect(() => {
   const fetchEvents = async () => {
@@ -57,6 +64,7 @@ export default function ProjetoDialog({ visible, onHide, projetoSelecionado, onS
     setTitulo("");
     setDescricao("");
     setSelectedStatus(null);
+    setSelectedEvent(null)
   };
 
   const handleSubmit = () => {
@@ -77,8 +85,9 @@ export default function ProjetoDialog({ visible, onHide, projetoSelecionado, onS
 
     onSave(dadosProjeto);
     setErro(null);
-    cleanForm();
     onHide();
+    cleanForm();
+
   };
 
   return (
@@ -88,8 +97,8 @@ export default function ProjetoDialog({ visible, onHide, projetoSelecionado, onS
       style={{ width: "600px" }}
       onHide={() => {
         setErro(null);
-        cleanForm();
         onHide();
+        cleanForm();
       }}
     >
       <div className="card flex flex-column gap-3">

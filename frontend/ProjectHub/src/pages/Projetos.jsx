@@ -12,7 +12,8 @@ import { Toast } from 'primereact/toast';
 
 
 const getHeaderImage = (eventId) => {
-  if (!eventId) {
+
+  if (!eventId || eventId == null) {
     return <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />;
   }
 
@@ -154,7 +155,7 @@ const confirmDelete = (project) => {
       <div className='card-container'>
         {projects.length === 0 ? (
           <div className='loading'>
-            <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" animationDuration=".5s"/>
+            <p style={{color: "#FFF"}}>Sem projetos cadastrados no momento :(</p>
           </div>
         ) : (
           projetosFiltrados.map((project) => (
