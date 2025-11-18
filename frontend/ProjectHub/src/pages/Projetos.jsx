@@ -165,7 +165,7 @@ const confirmDelete = (project) => {
                     onClick={() => {setProjetoSelecionado(project);setVisible(true);}}/>
                     <Button onClick={() => confirmDelete(project)} icon="pi pi-times" label="Delete" className="p-button-danger"/>
                   </div>}
-                header={getHeaderImage(project.event.eventId)}className="md:w-25rem">
+                header={getHeaderImage(project.event ? project.event.eventId : null)}className="md:w-25rem">
                 <p className="m-0">{project.description}</p>
               </Card>
             </div>

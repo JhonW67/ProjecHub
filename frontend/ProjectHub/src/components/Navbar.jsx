@@ -36,6 +36,13 @@ export default function TemplateDemo() {
             command: () => {
                 navigate('/login');
             }
+        },
+        {
+        label: 'Register',
+        icon: 'pi pi-user-plus', 
+        command: () => {
+            navigate('/register');
+        }
         }
     ]
 
