@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useRef } from 'react';
 import '../style.css/HomePage.css'
+import { Button } from 'primereact/button';
+        
 
 const Home = () => {
+
+  const targetRef = useRef(null);
+
+    const scrollToElement = () => {
+        targetRef.current?.scrollIntoView({ 
+            behavior: 'smooth' 
+        });
+  }
+
+
+
   return (
     <div className='main'>
         {/* Seção de Apresentação */}
@@ -10,8 +23,9 @@ const Home = () => {
             <h1>Compartilhe Seus <span className="highlight">Projetos Incríveis</span></h1>
             <h3>Plataforma universitária onde estudantes apresentam seus trabalhos, ideias e inovações para toda a comunidade acadêmica</h3>
             <div className="cta-buttons">
-              <button className="btn-primary">Explorar Projetos</button>
-              <button className="btn-secondary">Cadastrar Projeto</button>
+              <Button className='btn-primary' label="Explorar Projetos" onClick={scrollToElement}/>
+              <Button className='btn-secondary' label="Cadastrar Projeto" onClick={() => window.open('/projetos', '_self')}/>
+
             </div>
           </div>
         </div>
@@ -71,7 +85,7 @@ const Home = () => {
         </div>
 
         {/* Seção de Cards de Projetos em Destaque */}
-        <div className='section cards'>
+        <div ref={targetRef} className='section cards'>
           <div className="container">
             <h2>Projetos em Destaque</h2>
             <div className="projects-grid">
@@ -110,7 +124,7 @@ const Home = () => {
               </div>
             </div>
             <div className="section-center">
-              <button className="btn-outline">Ver Todos os Projetos</button>
+              <Button className='btn-outline' label="Ver Todos os Projetos" onClick={() => window.open('/projetos', '_self')}/>
             </div>
           </div>
         </div>
@@ -121,7 +135,8 @@ const Home = () => {
             <div className="cta-section">
               <h2>Venha fazer parte do ProjectHub</h2>
               <p>Junte-se a milhares de estudantes que já estão compartilhando suas ideias e inovações</p>
-              <button className="btn-primary">Cadastre-se Agora</button>
+              <Button className='btn-primary' label="Cadastre-se Agora" onClick={() => window.open('/register', '_self')}/>
+              
             </div>
           </div>
         </div>

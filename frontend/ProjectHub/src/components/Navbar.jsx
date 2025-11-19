@@ -20,7 +20,7 @@ export default function TemplateDemo() {
             label: 'Home',
             icon: 'pi pi-home',
             command: () => {
-                navigate('/home');
+                navigate('/');
             }
         },
         {
@@ -49,7 +49,7 @@ export default function TemplateDemo() {
     const start = (
         <div className="flex align-items-center"> 
             <div className='inline-flex align-items-center flex-none'>
-            <Link to="/home" className="link-nav" >
+            <Link to="/" className="link-nav" >
             <img alt="logo" src={logo} height="50"  className="logo-navbar" ></img>
             </Link>
             </div>

@@ -1,6 +1,6 @@
 .content{
     display: flex;
     height: calc(100vh - 75px);
-    background-color: rgba(201, 23, 23, 0.417);
+    background-color: #1e40af;
     justify-content: space-evenly;
 }
