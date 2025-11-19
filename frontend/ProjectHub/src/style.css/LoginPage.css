@@ -2,24 +2,67 @@
     display: flex;
     height: calc(100vh - 75px);
     background-color: #a0d2f0;
-    justify-content: space-evenly;
+    justify-content: space-between ;
+    /* height: 110vh; */
 }
 
 .div-img-login{
-    margin-top: 4em;
+    margin-top: 5em;
+    margin-left: 15em;
 }
 
 .img-login{
-    height: 33em;
+    height: 45em;
+}
+.div-wrapper-img{
+    margin-left: 5em;
+    margin-right: 5em;
 }
 
 .div-card-login {
-    margin-top: 4em;
 }
+
 
 .card-login{
     /* margin-right: 10em; */
-    width: 30em;
-    height: 33em;
-    text-align: center;
+    width: 40em;
+    height: calc(100vh - 75px);
+    text-align: left;
+    border-radius: 0;
+    width: 60em;
+}
+
+
+/* Div que envolve o conteúdo interno do Card Login */
+.card-login{
+    /* background-color: aqua; */
+    display: flex;
+    justify-content: center;
+}
+
+/* Conteúdo interno do Card Login */
+.p-card-body{
+    margin-top: 150px;
+    margin-right: 5em;
+    height: fit-content;
+    /* background-color: black; */
+}
+
+.floatLabel-submit-email{
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.text-submit-email {
+    width: 20em;
+}
+
+.text-submit-senha {
+    width: 20em;
+}
+
+.btn-entrar{
+    width: 250px;
+    background-color: #01316f;
+    border-color: #01316f;
 }

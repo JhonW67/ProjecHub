@@ -1,0 +1,11 @@
+.p-button:focus {
+  outline: 0 none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
+.p-button:focus-visible {
+  outline: 0 none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
