@@ -5,20 +5,29 @@ import { Divider } from 'primereact/divider';
 import { Checkbox } from 'primereact/checkbox';
 import { Password } from 'primereact/password';
 import { Card } from 'primereact/card';
-import '../style.css/LoginPage.css';
+import '../style.css/RegisterPage.css';
 
-const Register = () => {
+
+const Register = (onSwitch) => {
   return (
-    <div className='content' style={{ 
+    <div className='container-registro' style={{ 
       display: 'flex', 
-    flexDirection: 'row-reverse', 
-    minHeight: '100vh', 
-    background: 'rgba(1, 48, 110)', 
-    paddingTop: '70px' 
+      flexDirection: 'row-reverse', 
+      minHeight: '100vh', 
+      background: '#01306e', 
+      paddingTop: '0px' 
     }}>
       {/* Imagem institucional à direita */}
       <div>
-        <div style={{ flex: 1, height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{  
+          flex: 1,
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+          background: '#b3dbfa' 
+          }}>
           <img 
             src="../src/assets/imagem-login.png" 
             alt="Imagem-de-registro" 
@@ -33,16 +42,23 @@ const Register = () => {
 
       {/* Card de registro à esquerda */}
       <div>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div style={{ 
+          flex: 1, 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          minHeight: '100vh' 
+          }}>
           <Card 
-            title="Registro" 
+            title="Registre-se" 
             subTitle="Bem-vindo ao ProjectHub"
             style={{
-              width: '450px', // aumenta largura
-              height: '80vh', // aumenta altura
-              boxShadow: '0 4px 24px rgba(0,0,0,0.08)'
+              width: '700px',
+              height: 'auto',
+              borderRadius: '20px',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
             }} 
-            className="md:w-30rem h-auto"
+            
           >
             <div className="p-fluid">
               <InputText placeholder="Nome completo" className="mb-3"/>
@@ -58,7 +74,12 @@ const Register = () => {
               <label htmlFor="aceito">Aceito os termos</label>
               <Button label="Registrar" className="mt-3"/>
               <Divider />
-              <a href="/login">Já tenho uma conta</a>
+              <Button
+                label="Já tenho uma conta"
+                onClick={onSwitch}
+                className="p-button-link"
+                style={{marginTop: '16px'}}
+              />
             </div>
           </Card>
         </div>

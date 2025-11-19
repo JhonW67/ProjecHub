@@ -11,7 +11,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Projetos from './pages/Projetos'
 import Register from './pages/Register';
-
+import AuthPageSwitcher from './pages/components/AuthPageSwitcher';
 function App() {
 
   return (
