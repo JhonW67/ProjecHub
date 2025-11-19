@@ -1,6 +1,25 @@
 .content{
     display: flex;
     height: calc(100vh - 75px);
-    background-color: #1e40af;
+    background-color: #a0d2f0;
     justify-content: space-evenly;
+}
+
+.div-img-login{
+    margin-top: 4em;
+}
+
+.img-login{
+    height: 33em;
+}
+
+.div-card-login {
+    margin-top: 4em;
+}
+
+.card-login{
+    /* margin-right: 10em; */
+    width: 30em;
+    height: 33em;
+    text-align: center;
 }

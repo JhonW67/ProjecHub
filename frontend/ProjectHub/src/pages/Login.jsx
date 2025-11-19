@@ -16,15 +16,15 @@ const Login = () => {
     <div className='content'> {/*div content */}
 
       <div>  {/*div imagem página de login */}
-        <div>
-          <img src="../src/assets/imagem-login.png" alt="Imagem-de-login" className='h-30rem'/>
+        <div className='div-img-login'>
+          <img src="../src/assets/imagem-login.png" alt="Imagem-de-login" className='img-login'/>
         </div>
       </div>
 
 
       <div>  {/*div formulário login */}
-        <div>
-          <Card title="Login" subTitle="Card subtitle" footer={""} header={""} className="md:w-30rem h-auto">
+        <div className='div-card-login'>
+          <Card title="Login" subTitle="Card subtitle" footer={""} header={""} className="card-login">
           </Card>
         </div>
       </div>
