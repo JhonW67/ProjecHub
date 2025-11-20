@@ -59,12 +59,24 @@
     width: 20em;
 }
 
-.text-submit-senha {
+.p-icon-field .p-password-input{
     width: 20em;
+}
+
+.p-icon-field > .p-input-icon {
+    margin-top: -0.65rem;
+    margin-right: 0.2rem;
 }
 
 .btn-entrar{
     width: 250px;
     background-color: #01316f;
     border-color: #01316f;
+    transition: all 0.2s
+}
+
+.btn-entrar:hover{
+    /* opacity: 93%; */
+  filter: brightness(1.17);
+  transform: scale(1.01);
 }

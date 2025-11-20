@@ -40,10 +40,10 @@ const Login = () => {
             </FloatLabel>
 
             <FloatLabel>
-              <InputText id="senha" className='text-submit-senha' />
+              <Password toggleMask feedback={false} className='text-submit-senha'/>
               <label htmlFor="senha">Senha</label>
             </FloatLabel>
-
+            
           
           </Card>
         </div>
