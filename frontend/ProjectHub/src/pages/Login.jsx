@@ -13,12 +13,17 @@ const Login = () => {
   // const [senha, setSenha] = useState("")
   // const [lembrar, setLembrar] = useState(false)
 
+  const subTitle = (
+    <>
+    <ButtonNoStyle className="btn-criar-conta" label={"Não tem uma conta?" }/>
+    </>
+  );
+
   const footer = (
       <>
         <ButtonNoStyle label="Entrar" className='btn-entrar'/>
       </>
     );
-
   
   return (
     <div className='content'> {/*div content */}
@@ -32,7 +37,7 @@ const Login = () => {
 
       <div>  {/*div formulário login */}
         <div className='div-card-login'>
-          <Card title="Login" subTitle="Conecte-se ao ProjectHub" footer={footer} header={""} className="card-login">
+          <Card title="Login" subTitle={subTitle} footer={footer} header={""} className="card-login">
 
             <FloatLabel className='floatLabel-submit-email'>
               <InputText id="email"  keyfilter="email" className='text-submit-email' />
@@ -43,7 +48,7 @@ const Login = () => {
               <Password toggleMask feedback={false} className='text-submit-senha'/>
               <label htmlFor="senha">Senha</label>
             </FloatLabel>
-            
+            <ButtonNoStyle label="Esqueceu a senha?" className="btn-esqueceu-senha"/>
           
           </Card>
         </div>

@@ -50,6 +50,19 @@
     /* background-color: black; */
 }
 
+.btn-criar-conta{
+    background: none;
+    color: rgb(102, 128, 180);
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-decoration: underline;
+}
+
+.p-button-label{
+    font-weight: 550;
+}
+
 .floatLabel-submit-email{
     margin-bottom: 30px;
     margin-top: 30px;
@@ -66,6 +79,17 @@
 .p-icon-field > .p-input-icon {
     margin-top: -0.65rem;
     margin-right: 0.2rem;
+}
+
+.btn-esqueceu-senha{
+    background: none;
+    color: rgb(102, 128, 180);
+    margin: 0;
+    margin-left: 170px;
+    margin-top: 10px;
+    padding: 0;
+    border: none;
+    text-decoration: underline;
 }
 
 .btn-entrar{
