@@ -6,16 +6,20 @@ import { Checkbox } from 'primereact/checkbox'
 import { Password } from "primereact/password";
 import { Card } from "primereact/card";
 import { FloatLabel } from 'primereact/floatlabel';
+import { useNavigate } from 'react-router-dom';
+
 import '../style.css/LoginPage.css';
 
 const Login = () => {
   // const [email, setEmail] = useState("")
   // const [senha, setSenha] = useState("")
   // const [lembrar, setLembrar] = useState(false)
+  const navigate = useNavigate()
 
   const subTitle = (
+    
     <>
-    <ButtonNoStyle className="btn-criar-conta" label={"Não tem uma conta?" }/>
+    <ButtonNoStyle  label={"Não tem uma conta?" } className="btn-criar-conta" onClick={() => navigate('/register')}/>
     </>
   );
 
@@ -48,7 +52,7 @@ const Login = () => {
               <Password toggleMask feedback={false} className='text-submit-senha'/>
               <label htmlFor="senha">Senha</label>
             </FloatLabel>
-            <ButtonNoStyle label="Esqueceu a senha?" className="btn-esqueceu-senha"/>
+            <ButtonNoStyle label="Esqueceu a senha?" className="btn-esqueceu-senha" onClick={() => navigate('/register')}/>
           
           </Card>
         </div>
