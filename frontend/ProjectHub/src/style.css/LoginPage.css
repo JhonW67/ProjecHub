@@ -8,18 +8,20 @@
 
 .div-img-login{
     margin-top: 5em;
+}
+
+.div-wrapper-img{
     margin-left: 15em;
+    margin-right: 5em;
 }
 
 .img-login{
     height: 45em;
 }
-.div-wrapper-img{
-    margin-left: 5em;
-    margin-right: 5em;
-}
+
 
 .div-card-login {
+
 }
 
 
