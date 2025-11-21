@@ -11,10 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import '../style.css/LoginPage.css';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [erro, setErro] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [email, setEmail] = useState("")
+  // const [senha, setSenha] = useState("")
+  // const [lembrar, setLembrar] = useState(false)
 
   const navigate = useNavigate();
 
@@ -44,12 +43,9 @@ const Login = () => {
       }
     };
   const subTitle = (
+    
     <>
-      <ButtonNoStyle
-        className="btn-criar-conta"
-        label={"Não tem uma conta?"}
-        onClick={() => navigate('/register')}
-      />
+    <ButtonNoStyle  label={"Não tem uma conta?" } className="btn-criar-conta" onClick={() => navigate('/register')}/>
     </>
   );
 
@@ -98,9 +94,8 @@ const Login = () => {
               />
               <label htmlFor="senha">Senha</label>
             </FloatLabel>
-            {erro && <div style={{ color: 'red', margin: '10px 0' }}>{erro}</div>}
             <ButtonNoStyle label="Esqueceu a senha?" className="btn-esqueceu-senha" onClick={() => navigate('/register')}/>
-            </form>
+          
           </Card>
         </div>
       </div>
