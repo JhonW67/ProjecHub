@@ -19,10 +19,6 @@
     height: 45em;
 }
 
-
-
-
-
 .card-login{
     /* margin-right: 10em; */
     width: 40em;
@@ -42,9 +38,9 @@
 
 /* Conteúdo interno do Card Login */
 .p-card-body{
-    margin-top: 150px;
+    margin-top: 150px !important;
     margin-right: 5em;
-    height: fit-content;
+    height: fit-content !important;
     /* background-color: black; */
 }
 
