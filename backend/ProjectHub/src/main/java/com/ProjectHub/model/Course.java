@@ -20,7 +20,7 @@ public class Course {
     private UUID courseId;
 
     @Column(length = 100, unique = true, nullable = false)
-    private String name;
+    public String name;
 
     @Column(columnDefinition = "text")
     private String description;

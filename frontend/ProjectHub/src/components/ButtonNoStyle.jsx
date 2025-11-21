@@ -5,7 +5,7 @@ const ButtonNoStyle = ({ label, className, onClick, ...props }) => {
   return (
     <Button
       className={`btn ${className || ''}`}
-      label={label} 
+      label={label}
       onClick={onClick}
       {...props}
     />

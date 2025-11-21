@@ -18,11 +18,6 @@ public class AuthController {
     @Autowired
     private JwtService jwtService;
 
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        User novo = authService.register(user);
-        return ResponseEntity.ok(novo);
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {

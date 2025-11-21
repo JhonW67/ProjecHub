@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState }from 'react'
 import { InputText } from 'primereact/inputtext';
 import ButtonNoStyle  from '../components/ButtonNoStyle';
 import { Divider } from 'primereact/divider';
@@ -14,8 +14,34 @@ const Login = () => {
   // const [email, setEmail] = useState("")
   // const [senha, setSenha] = useState("")
   // const [lembrar, setLembrar] = useState(false)
-  const navigate = useNavigate()
 
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+      setErro('');
+      setLoading(true);
+
+      try {
+        const response = await fetch('http://localhost:8080/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password: senha })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          localStorage.setItem('token', data.token); // salva o token
+          window.location.href = '/home'; // redirecione como desejar
+        } else {
+          const error = await response.json();
+          setErro(error.error || 'Email ou senha inválidos.');
+        }
+      } catch (err) {
+        console.error(err);
+        setErro('Erro na conexão com o servidor.');
+      } finally {
+        setLoading(false);
+      }
+    };
   const subTitle = (
     
     <>
@@ -25,7 +51,12 @@ const Login = () => {
 
   const footer = (
       <>
-        <ButtonNoStyle label="Entrar" className='btn-entrar'/>
+        <ButtonNoStyle 
+        label={loading ? "Entrando..." : "Entrar"} 
+        className='btn-entrar' 
+        onClick={handleLogin} 
+        disabled={loading} 
+        />
       </>
     );
   
@@ -42,14 +73,25 @@ const Login = () => {
       <div>  {/*div formulário login */}
         <div className='div-card-login'>
           <Card title="Login" subTitle={subTitle} footer={footer} header={""} className="card-login">
-
+            <form onSubmit={e => { e.preventDefault(); handleLogin(); }}>
             <FloatLabel className='floatLabel-submit-email'>
-              <InputText id="email"  keyfilter="email" className='text-submit-email' />
+              <InputText
+                id="email"
+                keyfilter="email"
+                className='text-submit-email'
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
               <label htmlFor="email">Email</label>
             </FloatLabel>
-
             <FloatLabel>
-              <Password toggleMask feedback={false} className='text-submit-senha'/>
+              <Password
+                toggleMask
+                feedback={false}
+                className='text-submit-senha'
+                value={senha}
+                onChange={e => setSenha(e.target.value)}
+              />
               <label htmlFor="senha">Senha</label>
             </FloatLabel>
             <ButtonNoStyle label="Esqueceu a senha?" className="btn-esqueceu-senha" onClick={() => navigate('/register')}/>

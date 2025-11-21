@@ -3,6 +3,7 @@ package com.ProjectHub.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -37,6 +38,17 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "semester_id")
     private Semester semester;
+
+    @ManyToMany
+    @JoinTable(
+            name = "teacher_courses",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> teachingCourses;
+
+    @ElementCollection
+    private List<String> subjects;
 
     @Column(length = 50, unique = true)
     private String registration;
