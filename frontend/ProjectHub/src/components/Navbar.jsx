@@ -1,8 +1,10 @@
-import React, { useState } from 'react'; 
+import React, { useState, useRef } from 'react'; 
 //importa menubar
 import { Menubar } from 'primereact/menubar';
 import { Badge } from 'primereact/badge';
-import { Avatar } from 'primereact/avatar';  
+import { Avatar } from 'primereact/avatar'; 
+import { Menu } from 'primereact/menu';
+
 //importa a logo do project hub
 import logo from '../assets/projecthub-logo-icon.png'
 //importa o userNavigate para troca de páginas
@@ -13,9 +15,8 @@ import { Link } from 'react-router-dom';
 
 export default function TemplateDemo() {
 
-    const navigate = useNavigate(); // exporta os router para os links funcionarem
-    const [menu, setMenu] = useState(null);
-
+    const navigate = useNavigate(); // exporta os router para os links funcionarem  
+    const menu = useRef(null);
     const user = JSON.parse(localStorage.getItem('user'));
     const isLoggedIn = !!user;
 
@@ -77,8 +78,10 @@ export default function TemplateDemo() {
     ];
     const end = isLoggedIn ? (
             <div className="flex align-items-center ml-4">
-                <Menu model={menuItems} popup ref={el => setMenu(el)} id="avatar_menu" />
-                <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" shape="square" />
+                <Menu model={menuItems} popup ref={menu} id="avatar_menu" />
+                <Avatar image="https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png" 
+                onClick={e => menu.current.toggle(e)}
+                shape="square" />
             </div>
     ): null;
 
