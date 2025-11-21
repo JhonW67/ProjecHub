@@ -1,5 +1,6 @@
 package com.ProjectHub.controller;
 
+import com.ProjectHub.dto.RegisterRequest;
 import com.ProjectHub.model.User;
 import com.ProjectHub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> criar(@RequestBody User user) {
-        User salvo = userService.salvar(user);
+    public ResponseEntity<User> criar(@RequestBody RegisterRequest req) {
+        User salvo = userService.salvarFromRegister(req); // novo método!
         return ResponseEntity.ok(salvo);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<User> atualizar(@PathVariable UUID id, @RequestBody User user) {

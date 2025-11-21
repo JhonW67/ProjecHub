@@ -78,7 +78,7 @@ const Register = () => {
     setConfirmError('');
     
     if (!validatePassword(password)) {
-      setPasswordError('A senha deve ter pelo menos uma letra, um número e 6 caracteres.');
+      setPasswordError('A senha deve ter pelo menos uma letra, um número e 8 caracteres.');
       return;
     }
     if (password !== confirmPassword) {
@@ -106,7 +106,7 @@ const Register = () => {
         subjects: selectedSubjects.concat(customSubjects), // todas as disciplinas
     };
     try {
-      const response = await fetch('http://localhost:8080/api/usuarios', {
+      const response = await fetch('http://localhost:8080/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
