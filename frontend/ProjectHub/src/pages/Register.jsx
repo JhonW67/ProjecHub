@@ -8,13 +8,16 @@ import { Password } from 'primereact/password';
 import { Card } from 'primereact/card';
 import { MultiSelect } from 'primereact/multiselect';
 import { RadioButton } from 'primereact/radiobutton';
+import { useNavigate } from 'react-router-dom';
+
 import '../style.css/RegisterPage.css';
 
 
 
-const Register = ({onSwitch}) => {
+const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -50,6 +53,11 @@ const Register = ({onSwitch}) => {
   const [customSubjectInput, setCustomSubjectInput] = useState('');
   const [customSubjects, setCustomSubjects] = useState([]); // para outras disciplina
 
+  const navigate = useNavigate();
+
+  const onSwitch = () => {
+    navigate('/login');
+  };
   useEffect(() => {
     fetch('http://localhost:8080/api/courses')
       .then(res => res.json())
@@ -68,7 +76,7 @@ const Register = ({onSwitch}) => {
 
     setPasswordError('');
     setConfirmError('');
-
+    
     if (!validatePassword(password)) {
       setPasswordError('A senha deve ter pelo menos uma letra, um número e 6 caracteres.');
       return;
@@ -138,7 +146,19 @@ const Register = ({onSwitch}) => {
             className="Card-register"          >
             <form onSubmit={handleSubmit} className='form-registro'>
               <InputText value={name} onChange={e => setName(e.target.value)} placeholder="Nome completo" className="mt-3" />
-              <InputText value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" className="mt-3" />
+              <InputText value={email} 
+              onChange={e => {
+                setEmail(e.target.value);
+                if (e.target.value && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.target.value)) {
+                  setEmailError("Formato de email inválido.");
+                }else {
+                  setEmailError('');
+                }
+              }} 
+              placeholder="Email" 
+              className="mt-3" 
+              />
+              {emailError && <small style={{ color: 'red' }}>{emailError}</small>}
               <InputText value={registration} onChange={e => setRegistration(e.target.value)} placeholder="Matrícula ou ID" className="mt-3" />
               <div style={{ display: 'flex', gap: '16px', marginTop: '12px' }}>
                 <RadioButton inputId="aluno" value="student" onChange={e => setRole(e.value)} checked={role === 'student'} />
@@ -168,9 +188,9 @@ const Register = ({onSwitch}) => {
                       style={{ marginBottom: '1rem' }}
                       className="mt-3"
                   />
-                  <Password value={password} onChange={e => setPassword(e.target.value)} placeholder="Senha" toggleMask className="mb-3"/>
+                  <Password key='student' value={password} onChange={e => setPassword(e.target.value)} placeholder="Senha" toggleMask className="mb-3"/>
                     {passwordError && <small style={{ color: 'red', marginTop: 2 }}>{passwordError}</small>}
-                  <Password value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirmar senha" toggleMask className="mb-3"/>
+                  <Password key='student-confirm' value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirmar senha" toggleMask className="mb-3"/>
                     {confirmError && <small style={{ color: 'red', marginTop: 2 }}>{confirmError}</small>}
                 </>
               )}  
@@ -269,9 +289,9 @@ const Register = ({onSwitch}) => {
                       </span>
                     ))}
                   </div>
-                  <Password value={password} onChange={e => setPassword(e.target.value)} placeholder="Senha" toggleMask className="mt-3"/>
+                  <Password key="teacher" value={password} onChange={e => setPassword(e.target.value)} placeholder="Senha" toggleMask className="mt-3"/>
                     {passwordError && <small style={{ color: 'red', marginTop: 2 }}>{passwordError}</small>}
-                  <Password value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirmar senha" toggleMask className="mt-3"/>
+                  <Password key="teacher-confirm" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirmar senha" toggleMask className="mt-3"/>
                     {confirmError && <small style={{ color: 'red', marginTop: 2 }}>{confirmError}</small>}
                 </>
               )}
