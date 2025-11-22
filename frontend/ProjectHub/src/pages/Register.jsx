@@ -143,7 +143,8 @@ const Register = () => {
           <Card 
             title="Registre-se" 
             subTitle="Bem-vindo ao ProjectHub"
-            className="Card-register"          >
+            className="Card-register" 
+            style={{ height: 'auto' }}         >
             <form onSubmit={handleSubmit} className='form-registro'>
               <InputText value={name} onChange={e => setName(e.target.value)} placeholder="Nome completo" className="mt-3" />
               <InputText value={email} 

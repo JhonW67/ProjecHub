@@ -17,7 +17,7 @@
   min-width: 0;
   width: 50vw;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   min-height: 100vh;
   transition: all 0.3s;
@@ -34,11 +34,11 @@
   position: relative;
 }
 
-.img-register img, .img-register {
-  width: 90%;
-  max-width: 490px;
+.img-bg img {
+  width: 100%;
+  max-width: 70vh;
   height: auto;
-  max-height: 74vh;
+  /* max-height: 100vh; */
   object-fit: contain;
   border-radius: 18px;
   background: #b3dbfa;
@@ -46,37 +46,48 @@
   margin: 0 auto;
 }
 
-/* Card alinhado, mesmo padrão login */
+/* Container do card - REMOVA as alturas fixas */
 .card-register {
-  width: 100%;
-  height: 4000px;
-  max-width: 405px;
+  width: 700px !important;
+  max-width: 800px;
   min-width: 320px;
-  margin: 0 auto;
+  margin: 0px !important;
   display: flex;
   justify-content: center;
 }
 
+/* Card principal - REMOVA altura fixa e use auto */
 .Card-register {
   width: 100%;
-  height: 4000px !important;
-  max-width: 405px;
+  /* max-width: 405px; */
   min-width: 320px;
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
   background: #fff;
   padding: 2.1rem 2rem 2rem 2rem;
-  margin: 0 auto;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  height: auto !important; /* Force altura automática */
+  min-height: auto; /* Permite que cresça conforme o conteúdo */
 }
 
-.p-card-body {
-height: 100vh;
-margin-top: 0px;
+/* Corrija o corpo do card */
+.Card-register .p-card-body {
+  height: auto !important;
+  margin-top: 0px !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
-/* Título interno do card, visual igual login */
+
+.Card-register .p-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título interno do card */
 .Card-register .p-card-title {
   font-size: 1.45rem;
   font-weight: bold;
@@ -97,6 +108,7 @@ margin-top: 0px;
   gap: 16px;
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .form-registro .p-inputtext,
@@ -111,67 +123,15 @@ margin-top: 0px;
   box-sizing: border-box;
 }
 
-.form-registro .linha-horizontal {
-  display: flex;
-  gap: 12px;
-}
-.form-registro .linha-horizontal > * {
-  flex: 1;
-}
-.form-registro .opcoes-role {
-  display: flex;
-  gap: 24px;
-  align-items: center;
-  margin-top: 6px;
-}
-.form-registro .disciplinas-adicionais {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.form-registro .disciplinas-adicionais .p-inputtext { flex: 1; }
-.form-registro .chips-lista {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 2px;
-}
-.form-registro .chip-custom {
-  background: #2563eb;
-  color: #fff;
-  border-radius: 16px;
-  padding: 3px 14px 3px 10px;
-  display: flex;
-  align-items: center;
-  font-size: 0.92rem;
-}
-.form-registro .chip-custom .remove-chip {
-  margin-left: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  color: #fff;
-}
-.form-registro .p-button {
-  min-width: 110px;
-  max-width: 155px;
-  align-self: flex-end;
-}
-.form-registro .p-button-sm {
-  padding: 6px 16px !important;
-  font-size: 1rem !important;
-}
-.form-registro .termos {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-}
+/* ... mantenha o resto do seu CSS existente ... */
 
-/* Emula scroll interno para muitos campos, mas nunca estoura fora do card */
+/* REMOVA estas linhas problemáticas: */
+/*
 .Card-register {
   overflow-y: auto;
   max-height: 90vh;
 }
+*/
 
 @media (max-width: 1200px) {
   .card-register, .Card-register, .form-registro {
@@ -179,7 +139,7 @@ margin-top: 0px;
     min-width: unset;
     padding: 1.2rem 1rem !important;
   }
-  .img-register img {
+  .img-bg img {
     max-width: 99vw;
     max-height: 40vh;
   }
@@ -196,13 +156,14 @@ margin-top: 0px;
     width: 100vw;
     max-width: 100vw;
     height: auto;
+    padding: 2rem 0;
   }
   .card-register, .Card-register, .form-registro {
     max-width: 95vw !important;
     min-width: unset;
     padding: 1.2rem 1rem !important;
   }
-  .img-register img {
+  .img-bg img {
     max-width: 95vw;
     max-height: 34vh;
   }
