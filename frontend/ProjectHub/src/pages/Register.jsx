@@ -130,7 +130,7 @@ const Register = () => {
       <div className='img-wrapper'>
         <div className='img-bg'>
           <img 
-            src="../src/assets/imagem-login.png" 
+            src="../src/assets/img-register.png" 
             alt="Imagem-de-registro" 
            
           />

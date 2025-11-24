@@ -2,7 +2,7 @@
 .container-registro {
   display: flex;
   min-height: 100vh;
-  background: #01306e;
+  background: #9ec9f2;
   flex-direction: row-reverse;
   padding: 0;
   margin: 0;
@@ -30,7 +30,7 @@
 
 /* Fundo institucional */
 .img-wrapper {
-  background: #b3dbfa;
+  background: #9ec9f2;
   position: relative;
 }
 
