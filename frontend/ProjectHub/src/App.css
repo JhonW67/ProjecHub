@@ -6,6 +6,7 @@
 
 .p-menubar-root-list {
     margin: auto; /* aplica margem a cada item */
+    margin-right: 718px;
 }
 
 .p-menubar-end {
