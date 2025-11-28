@@ -34,4 +34,5 @@ public class ProjectService {
     public void deletar(UUID id) {
         projectRepository.deleteById(id);
     }
+
 }

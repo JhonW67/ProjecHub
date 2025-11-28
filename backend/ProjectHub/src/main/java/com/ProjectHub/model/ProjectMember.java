@@ -31,4 +31,11 @@ public class ProjectMember {
 
     @Column(name = "joined_at")
     private Timestamp joinedAt;
+
+    public Object getUserId() { return user;
+    }
+
+    public Object getName() {
+        return null;
+    }
 }

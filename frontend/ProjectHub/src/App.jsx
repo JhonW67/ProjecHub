@@ -11,7 +11,8 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Projetos from './pages/Projetos'
 import Register from './pages/Register';
-import AuthPageSwitcher from './pages/components/AuthPageSwitcher';
+import ProjectDetail from './pages/ProjectDetail';
+
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/Login" element={<Login />} />  {/* Página de login */}
         <Route path="/Projetos" element={<Projetos />} />  {/* Página de Projetos */}
         <Route path="/Register" element={<Register />} />  {/* Página de Registro */}
+        <Route path="/Projetos/:projectId" element={<ProjectDetail />} /> {/* Detalhes do Projeto */}
       </Routes>
     </BrowserRouter>
   );

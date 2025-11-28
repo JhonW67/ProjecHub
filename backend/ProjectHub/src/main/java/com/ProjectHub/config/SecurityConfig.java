@@ -15,6 +15,7 @@ public class SecurityConfig {
         http
                 .csrf().disable() // Libera para API REST
                 .authorizeHttpRequests()
+                .requestMatchers("/api/projects/**").permitAll()
                 .requestMatchers("/api/**").permitAll() // Liberado para testes
                 .anyRequest().authenticated();
         return http.build();

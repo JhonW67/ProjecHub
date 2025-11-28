@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Document {
+public class  Document {
 
     @Id
     @GeneratedValue
@@ -36,5 +36,16 @@ public class Document {
 
     @Column(name = "created_at")
     private Timestamp createdAt;
+
+    @Column
+    private String type;
+
+    @Column
+    private String url;
+
+    public UUID getId() { return documentId; }
+    public String getName() { return filename; }
+    public String getType() { return type; }
+    public String getUrl() { return url; }
 }
 

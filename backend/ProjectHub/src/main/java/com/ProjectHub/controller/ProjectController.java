@@ -1,12 +1,19 @@
 package com.ProjectHub.controller;
 
+import com.ProjectHub.dto.ProjectDetailDTO;
 import com.ProjectHub.model.Project;
+import com.ProjectHub.model.User;
+import com.ProjectHub.repository.UserRepository;
 import com.ProjectHub.service.ProjectService;
+import com.ProjectHub.service.mapping.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -16,19 +23,29 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ProjectMapper projectMapper;
+
     @GetMapping
     public ResponseEntity<List<Project>> listar() {
         return ResponseEntity.ok(projectService.listarTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Project> buscar(@PathVariable UUID id) {
+    public ResponseEntity<ProjectDetailDTO> getProjectDetails(@PathVariable UUID id) {
         Project project = projectService.buscarPorId(id);
         if (project == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(project);
+
+        // visitante: passa null para o mapper
+        ProjectDetailDTO dto = projectMapper.toDetailDto(project, null);
+        return ResponseEntity.ok(dto);
     }
+
 
     @PostMapping
     public ResponseEntity<Project> criar(@RequestBody Project project) {
@@ -53,3 +70,7 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     }
 }
+
+
+
+

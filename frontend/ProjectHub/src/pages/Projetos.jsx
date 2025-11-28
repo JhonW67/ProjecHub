@@ -8,7 +8,7 @@ import { Button } from 'primereact/button';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import ProjetoDialog from "./components/ProjetoDialog";
 import { Toast } from 'primereact/toast';
-
+import { useNavigate } from 'react-router-dom';
 
 const getHeaderImage = (eventId) => {
 
@@ -135,6 +135,8 @@ const confirmDelete = (project) => {
   });
 };
 
+const navigate = useNavigate();
+
   return (
     <div>
       <Toast ref={toast} />
@@ -167,6 +169,7 @@ const confirmDelete = (project) => {
                   </div>}
                 header={getHeaderImage(project.event ? project.event.eventId : null)}className="md:w-25rem">
                 <p className="m-0">{project.description}</p>
+                <Button label="Ver Projeto" onClick={() => navigate(`/Projetos/${project.projectId}`)} />
               </Card>
             </div>
           ))
