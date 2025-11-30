@@ -47,5 +47,9 @@ public class  Document {
     public String getName() { return filename; }
     public String getType() { return type; }
     public String getUrl() { return url; }
+
+    public void setName(String name) {
+        this.filename = name;
+    }
 }
 

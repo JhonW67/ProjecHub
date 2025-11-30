@@ -1,9 +1,17 @@
 package com.ProjectHub.controller;
 
+import com.ProjectHub.dto.DocumentCreateDTO;
+import com.ProjectHub.dto.ProjectDetailDTO;
 import com.ProjectHub.model.Document;
+import com.ProjectHub.model.Project;
+import com.ProjectHub.model.User;
+import com.ProjectHub.repository.UserRepository;
 import com.ProjectHub.service.DocumentService;
+import com.ProjectHub.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +23,10 @@ public class DocumentController {
 
     @Autowired
     private DocumentService service;
+
+    private UserRepository userRepository;
+
+    private ProjectService projectService;
 
     @GetMapping
     public ResponseEntity<List<Document>> listar() {
@@ -35,6 +47,9 @@ public class DocumentController {
         Document salvo = service.salvar(obj);
         return ResponseEntity.ok(salvo);
     }
+
+    @PostMapping("/{id}/documents")
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Document> atualizar(@PathVariable UUID id, @RequestBody Document obj) {

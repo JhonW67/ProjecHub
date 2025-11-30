@@ -15,7 +15,7 @@ public class ProjectDetailDTO {
     private LocalDate createdAt;
     private String imageUrl;
     private List<UserDTO> members;
-    private List<DocumentDTO> documents;
+    private List<DocumentCreateDTO> documents;
     private List<FeedbackDTO> feedbacks;
     private EvaluationDTO evaluation;
     private String qrCodeUrl;

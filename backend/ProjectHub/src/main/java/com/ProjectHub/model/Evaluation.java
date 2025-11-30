@@ -1,6 +1,6 @@
 package com.ProjectHub.model;
 
-import com.ProjectHub.dto.DocumentDTO;
+import com.ProjectHub.dto.DocumentCreateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Timestamp;

@@ -33,13 +33,19 @@ public class ProjectMapper {
 
         // Documentos
         dto.setDocuments(project.getDocuments().stream()
-                .map(d -> new DocumentDTO(d.getId(), d.getName(), d.getType(), d.getUrl()))
+                .map(d -> new DocumentCreateDTO(d.getId(), d.getName(), d.getType(), d.getUrl()))
                 .collect(Collectors.toList()));
 
         // Feedbacks
         dto.setFeedbacks(project.getFeedbacks().stream()
-                .map(f -> new FeedbackDTO(f.getId(), f.getAuthor().getName(), f.getComment()))
+                .map(f -> new FeedbackDTO(
+                        f.getId(),
+                        f.getAuthor().getName(),
+                        f.getComment(),
+                        f.getRating()
+                ))
                 .collect(Collectors.toList()));
+
 
         // QR Code
         dto.setQrCodeUrl(project.getQrCodeUrl());
