@@ -1,14 +1,12 @@
 package com.ProjectHub.controller;
 
-import com.ProjectHub.dto.DocumentCreateDTO;
-import com.ProjectHub.dto.FeedbackCreateDTO;
-import com.ProjectHub.dto.ProjectBasicUpdateDTO;
-import com.ProjectHub.dto.ProjectDetailDTO;
+import com.ProjectHub.dto.*;
 import com.ProjectHub.model.Feedback;
 import com.ProjectHub.model.Project;
 import com.ProjectHub.model.User;
 import com.ProjectHub.repository.UserRepository;
 import com.ProjectHub.service.DocumentService;
+import com.ProjectHub.service.EvaluationService;
 import com.ProjectHub.service.FeedbackService;
 import com.ProjectHub.service.ProjectService;
 import com.ProjectHub.service.mapping.ProjectMapper;
@@ -17,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +40,9 @@ public class ProjectController {
     @Autowired
     private ProjectMapper projectMapper;
 
+    @Autowired
+    private EvaluationService evaluationService;
+
     @GetMapping
     public ResponseEntity<List<Project>> listar() {
         return ResponseEntity.ok(projectService.listarTodos());
@@ -60,19 +62,24 @@ public class ProjectController {
 
 
     @PostMapping
-    public ResponseEntity<Project> criar(@RequestBody Project project) {
-        Project salvo = projectService.salvar(project);
+    public ResponseEntity<Project> criar(@RequestBody Project project, @AuthenticationPrincipal UserDetails userDetails) {
+        User creator = null;
+        if (userDetails != null) {
+            creator = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+        }
+        Project salvo = projectService.salvar(project, creator);
         return ResponseEntity.ok(salvo);
     }
 
+
     @PutMapping("/{id}")
-    public ResponseEntity<Project> atualizar(@PathVariable UUID id, @RequestBody Project project) {
+    public ResponseEntity<Project> atualizar(@PathVariable UUID id, @RequestBody Project project, User creator) {
         Project existente = projectService.buscarPorId(id);
         if (existente == null) {
             return ResponseEntity.notFound().build();
         }
         project.setProjectId(id);
-        Project atualizado = projectService.salvar(project);
+        Project atualizado = projectService.salvar(project, creator);
         return ResponseEntity.ok(atualizado);
     }
 
@@ -96,6 +103,22 @@ public class ProjectController {
         return ResponseEntity.ok(dto);
     }
 
+    @PostMapping("/{id}/banner")
+    public ResponseEntity<ProjectDetailDTO> uploadBanner(
+            @PathVariable UUID id,
+            @RequestParam("file") MultipartFile file) {
+
+        Project projeto = projectService.buscarPorId(id);
+        if (projeto == null) return ResponseEntity.notFound().build();
+
+        projectService.salvarBanner(projeto, file);
+
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, null);
+        return ResponseEntity.ok(dto);
+    }
+
+
+
     @PostMapping("/{id}/documents")
     public ResponseEntity<ProjectDetailDTO> adicionarDocumento(
             @PathVariable UUID id,
@@ -117,84 +140,112 @@ public class ProjectController {
         return ResponseEntity.ok(dto);
     }
 
-    @DeleteMapping("/{projectId}/documents/{documentId}")
-    public ResponseEntity<ProjectDetailDTO> removerDocumento(
-            @PathVariable UUID projectId,
-            @PathVariable UUID documentId,
-            @AuthenticationPrincipal UserDetails userDetails) {
-
-        Project projeto = projectService.buscarPorId(projectId);
-        if (projeto == null) return ResponseEntity.notFound().build();
-
-        User requester = null;
-        if (userDetails != null) {
-            requester = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-        }
-
-        // checa permissão (membro/admin)
-        if (!projectService.podeEditarProjeto(projeto, requester)) {
-            return ResponseEntity.status(403).build();
-        }
-
-        documentService.removerDocumento(projeto, documentId);
-
-        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, requester);
-        return ResponseEntity.ok(dto);
-    }
-
-    @PostMapping("/{id}/feedbacks")
-    public ResponseEntity<ProjectDetailDTO> adicionarFeedback(
+    @PostMapping("/{id}/documents/upload")
+    public ResponseEntity<ProjectDetailDTO> uploadDocument(
             @PathVariable UUID id,
-            @RequestBody FeedbackCreateDTO req,
-            @AuthenticationPrincipal UserDetails userDetails) {
-
-        if (userDetails == null) {
-            return ResponseEntity.status(401).build();
-        }
+            @RequestParam("file") MultipartFile file) {
 
         Project projeto = projectService.buscarPorId(id);
         if (projeto == null) return ResponseEntity.notFound().build();
 
-        User requester = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-        if (requester == null) return ResponseEntity.status(401).build();
+        // sem segurança de usuário por enquanto
+        documentService.salvarArquivo(projeto, file, null);
 
-        feedbackService.adicionarFeedback(projeto, requester, req);
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, null);
+        return ResponseEntity.ok(dto);
+    }
 
-        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, requester);
+
+
+    @DeleteMapping("/{projectId}/documents/{documentId}")
+    public ResponseEntity<ProjectDetailDTO> removerDocumento(
+            @PathVariable UUID projectId,
+            @PathVariable UUID documentId) {
+
+        Project projeto = projectService.buscarPorId(projectId);
+        if (projeto == null) return ResponseEntity.notFound().build();
+
+        documentService.removerDocumento(projeto, documentId);
+
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, null);
+        return ResponseEntity.ok(dto);
+    }
+
+
+    @PostMapping("/{id}/feedbacks-test")
+    public ResponseEntity<ProjectDetailDTO> adicionarFeedback(
+            @PathVariable UUID id,
+            @RequestBody FeedbackCreateDTO req) {
+        System.out.println("ENTROU NO FEEDBACK");
+        Project projeto = projectService.buscarPorId(id);
+        if (projeto == null) return ResponseEntity.notFound().build();
+
+        feedbackService.adicionarFeedback(projeto, null, req);
+
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, null);
         return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{projectId}/feedbacks/{feedbackId}")
     public ResponseEntity<ProjectDetailDTO> removerFeedback(
             @PathVariable UUID projectId,
-            @PathVariable UUID feedbackId,
-            @AuthenticationPrincipal UserDetails userDetails) {
-
-        if (userDetails == null) return ResponseEntity.status(401).build();
+            @PathVariable UUID feedbackId) {
 
         Project projeto = projectService.buscarPorId(projectId);
         if (projeto == null) return ResponseEntity.notFound().build();
 
-        User requester = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-        if (requester == null) return ResponseEntity.status(401).build();
-
-        // regra simples: autor pode apagar o próprio feedback, admin também
         Feedback fb = feedbackService.buscarPorId(feedbackId);
         if (fb == null || !fb.getProject().getProjectId().equals(projectId)) {
             return ResponseEntity.notFound().build();
         }
-        boolean isAdmin = "admin".equalsIgnoreCase(requester.getRole());
-        boolean isAuthor = fb.getAuthor().getUserId().equals(requester.getUserId());
-        if (!isAdmin && !isAuthor) {
-            return ResponseEntity.status(403).build();
-        }
 
         feedbackService.deletar(feedbackId);
 
-        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, requester);
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, null);
         return ResponseEntity.ok(dto);
     }
 
+
+
+    @PostMapping("/{id}/qrcode")
+    public ResponseEntity<ProjectDetailDTO> gerarQrCode(@PathVariable UUID id) {
+        Project projeto = projectService.buscarPorId(id);
+        if (projeto == null) return ResponseEntity.notFound().build();
+
+        // base do front – depois pode mover para config
+        String frontBaseUrl = "http://localhost:5173";
+
+        projectService.gerarQrCode(projeto, frontBaseUrl);
+
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, null);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping("/{id}/evaluation")
+    public ResponseEntity<ProjectDetailDTO> salvarAvaliacao(
+            @PathVariable UUID id,
+            @RequestBody EvaluationCreateDTO req,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        if (userDetails == null) return ResponseEntity.status(401).build();
+
+        Project projeto = projectService.buscarPorId(id);
+        if (projeto == null) return ResponseEntity.notFound().build();
+
+        User professor = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+        if (professor == null) return ResponseEntity.status(401).build();
+
+        // regra simples: só professor pode avaliar
+        if (!"teacher".equalsIgnoreCase(professor.getRole()) &&
+                !"admin".equalsIgnoreCase(professor.getRole())) {
+            return ResponseEntity.status(403).build();
+        }
+
+        evaluationService.salvarOuAtualizar(projeto, professor, req);
+
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, professor);
+        return ResponseEntity.ok(dto);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {

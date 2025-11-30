@@ -1,19 +1,18 @@
 package com.ProjectHub.controller;
 
-import com.ProjectHub.dto.DocumentCreateDTO;
-import com.ProjectHub.dto.ProjectDetailDTO;
 import com.ProjectHub.model.Document;
-import com.ProjectHub.model.Project;
-import com.ProjectHub.model.User;
 import com.ProjectHub.repository.UserRepository;
 import com.ProjectHub.service.DocumentService;
 import com.ProjectHub.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,8 +23,10 @@ public class DocumentController {
     @Autowired
     private DocumentService service;
 
+    @Autowired
     private UserRepository userRepository;
 
+    @Autowired
     private ProjectService projectService;
 
     @GetMapping
@@ -48,8 +49,28 @@ public class DocumentController {
         return ResponseEntity.ok(salvo);
     }
 
-    @PostMapping("/{id}/documents")
+    @GetMapping("/{id}/download")
+    public ResponseEntity<Resource> download(@PathVariable UUID id) {
+        Document doc = service.buscarPorId(id);
+        if (doc == null || doc.getFilepath() == null) {
+            return ResponseEntity.notFound().build();
+        }
 
+        try {
+            Path path = Paths.get(doc.getFilepath());
+            Resource resource = new UrlResource(path.toUri());
+            if (!resource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String filename = doc.getFilename() != null ? doc.getFilename() : "arquivo";
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Document> atualizar(@PathVariable UUID id, @RequestBody Document obj) {
@@ -67,5 +88,6 @@ public class DocumentController {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
 }
 

@@ -19,7 +19,7 @@ const ProjectFeedback = ({ project, setProject, user }) => {
 
     try {
       setSaving(true);
-      const res = await fetch(`http://localhost:8080/api/projects/${project.projectId}/feedbacks`, {
+      const res = await fetch(`http://localhost:8080/api/projects/${project.projectId}/feedbacks-test`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ comment: newFeedback , rating })

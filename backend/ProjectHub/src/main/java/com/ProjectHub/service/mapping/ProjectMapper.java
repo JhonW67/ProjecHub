@@ -33,8 +33,21 @@ public class ProjectMapper {
 
         // Documentos
         dto.setDocuments(project.getDocuments().stream()
-                .map(d -> new DocumentCreateDTO(d.getId(), d.getName(), d.getType(), d.getUrl()))
+                .map(d -> {
+                    // DocumentCreateDTO = (UUID id, String name, String type, String url)
+                    String urlFinal;
+                    if (d.getUrl() != null && !d.getUrl().isBlank()) {
+                        urlFinal = d.getUrl(); // É um documento do tipo link externo
+                    } else if (d.getFilepath() != null && !d.getFilepath().isBlank()) {
+                        urlFinal = "http://localhost:8080/api/documents/" + d.getId() + "/download";
+                        // Use APP_URL/config se for em produção
+                    } else {
+                        urlFinal = null;
+                    }
+                    return new DocumentCreateDTO(d.getId(), d.getName(), d.getType(), urlFinal);
+                })
                 .collect(Collectors.toList()));
+
 
         // Feedbacks
         dto.setFeedbacks(project.getFeedbacks().stream()
@@ -52,14 +65,15 @@ public class ProjectMapper {
 
         // Avaliação
         if (isAdmin || isMember) {
-            Evaluation eval = project.getEvaluation();
-            if (eval != null) {
+            if (project.getEvaluation() != null) {
+                Evaluation eval = project.getEvaluation();
                 dto.setEvaluation(new EvaluationDTO(
-                        eval.getComment(),
                         eval.getGrade(),
+                        eval.getComment(),
                         eval.getProfessor().getName()
                 ));
             }
+
         }
         dto.setCanEdit(isAdmin || isMember);
         return dto;

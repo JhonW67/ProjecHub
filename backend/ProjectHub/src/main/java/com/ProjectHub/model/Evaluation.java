@@ -49,5 +49,15 @@ public class Evaluation {
 
     public User getProfessor() { return  evaluator;
     }
+
+    public void setProfessor(User professor) {
+    }
+
+    public void setGrade(Integer grade) {
+    }
+
+    public void setComment(String comment) {
+
+    }
 }
 
