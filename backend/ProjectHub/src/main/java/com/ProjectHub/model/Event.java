@@ -1,11 +1,17 @@
 package com.ProjectHub.model;
 
+import com.ProjectHub.model.Project;
+import com.ProjectHub.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
-import java.util.UUID;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "events")
@@ -41,7 +47,5 @@ public class Event {
     @JsonIgnoreProperties("event")
     private List<Project> projects;
 
-    public Event(Object o, String s, String s1, String i, boolean b) {
-    }
-}
 
+}

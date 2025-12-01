@@ -17,55 +17,44 @@ public class EventService {
 
     @PostConstruct
     public void seedPeiEvents() {
-        if (repository.count() > 0) return; // evita duplicar
+        if (repository.count() > 0) return;
 
-        repository.save(new Event(
-                null,
-                "PEI I - Projeto Extensionista Integrador I",
-                "Primeira etapa do Projeto Extensionista Integrador, focada em diagnóstico e definição de escopo.",
-                "I",
-                true
-        ));
+        repository.save(Event.builder()
+                .title("PEI I - Projeto Extensionista Integrador I")
+                .description("Primeira etapa do Projeto Extensionista Integrador, focada em diagnóstico e definição de escopo.")
+                // não seta startAt/endAt => vão como null
+                .build()
+        );
 
-        repository.save(new Event(
-                null,
-                "PEI II - Projeto Extensionista Integrador II",
-                "Continuidade do PEI com aprofundamento do problema e desenho da solução.",
-                "II",
-                true
-        ));
+        repository.save(Event.builder()
+                .title("PEI II - Projeto Extensionista Integrador II")
+                .description("Continuidade do PEI com aprofundamento do problema e desenho da solução.")
+                .build()
+        );
 
-        repository.save(new Event(
-                null,
-                "PEI III - Projeto Extensionista Integrador III",
-                "Fase de prototipação e validação inicial com a comunidade/parceiros.",
-                "III",
-                true
-        ));
+        repository.save(Event.builder()
+                .title("PEI III - Projeto Extensionista Integrador III")
+                .description("Fase de prototipação e validação inicial com a comunidade/parceiros.")
+                .build()
+        );
 
-        repository.save(new Event(
-                null,
-                "PEI IV - Projeto Extensionista Integrador IV",
-                "Aprimoramento da solução, consolidação técnica e documentação intermediária.",
-                "IV",
-                true
-        ));
+        repository.save(Event.builder()
+                .title("PEI IV - Projeto Extensionista Integrador IV")
+                .description("Aprimoramento da solução, consolidação técnica e documentação intermediária.")
+                .build()
+        );
 
-        repository.save(new Event(
-                null,
-                "PEI V - Projeto Extensionista Integrador V",
-                "Implementação ampliada, métricas de impacto e ajustes finais.",
-                "V",
-                true
-        ));
+        repository.save(Event.builder()
+                .title("PEI V - Projeto Extensionista Integrador V")
+                .description("Implementação ampliada, métricas de impacto e ajustes finais.")
+                .build()
+        );
 
-        repository.save(new Event(
-                null,
-                "PEI VI - Projeto Extensionista Integrador VI",
-                "Encerramento do ciclo PEI com apresentação, avaliação final e registro dos aprendizados.",
-                "VI",
-                true
-        ));
+        repository.save(Event.builder()
+                .title("PEI VI - Projeto Extensionista Integrador VI")
+                .description("Encerramento do ciclo PEI com apresentação, avaliação final e registro dos aprendizados.")
+                .build()
+        );
     }
 
 
@@ -85,3 +74,4 @@ public class EventService {
         repository.deleteById(id);
     }
 }
+
