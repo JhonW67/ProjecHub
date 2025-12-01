@@ -11,31 +11,39 @@ const ProjectFeedback = ({ project, setProject, user }) => {
   const [rating, setRating] = useState(0);
 
   const sendFeedback = async () => {
-    if (!user) {
-      alert('Faça login para enviar feedback.');
-      return;
-    }
-    if (!newFeedback.trim() && rating === 0) return;
+  if (!user) {
+    alert('Faça login para enviar feedback.');
+    return;
+  }
+  if (!newFeedback.trim() && rating === 0) return;
 
-    try {
-      setSaving(true);
-      const res = await fetch(`http://localhost:8080/api/projects/${project.projectId}/feedbacks-test`, {
+  try {
+    setSaving(true);
+    const res = await fetch(
+      `http://localhost:8080/api/projects/${project.projectId}/feedbacks`,
+      {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ comment: newFeedback , rating })
-      });
-      if (!res.ok) throw new Error('Erro ao enviar feedback');
-      const updated = await res.json(); // ProjectDetailDTO
-      setProject(updated);
-      setNewFeedback('');
-      setRating(0);
-    } catch (err) {
-      console.error(err);
-      alert('Não foi possível enviar o feedback.');
-    } finally {
-      setSaving(false);
-    }
-  };
+        body: JSON.stringify({
+          comment: newFeedback,
+          rating,
+          userId: user.userId || user.id   // garante que algum id vá
+        })
+      }
+    );
+    if (!res.ok) throw new Error('Erro ao enviar feedback');
+    const updated = await res.json();
+    setProject(updated);
+    setNewFeedback('');
+    setRating(0);
+  } catch (err) {
+    console.error(err);
+    alert('Não foi possível enviar o feedback.');
+  } finally {
+    setSaving(false);
+  }
+};
+
 
   const handleDelete = async (feedbackId) => {
     if (!window.confirm('Remover este feedback?')) return;

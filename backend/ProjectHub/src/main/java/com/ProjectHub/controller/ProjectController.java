@@ -44,9 +44,22 @@ public class ProjectController {
     private EvaluationService evaluationService;
 
     @GetMapping
-    public ResponseEntity<List<Project>> listar() {
-        return ResponseEntity.ok(projectService.listarTodos());
+    public ResponseEntity<List<ProjectListDTO>> listar() {
+        List<Project> projects = projectService.listarTodos();
+        List<ProjectListDTO> dtos = projects.stream().map(p -> {
+            ProjectListDTO dto = new ProjectListDTO();
+            dto.setProjectId(p.getProjectId());
+            dto.setTitle(p.getTitle());
+            dto.setDescription(p.getDescription());
+            dto.setStatus(p.getStatus());
+            dto.setImageUrl(p.getImageUrl());
+            dto.setGroupName(p.getGroupName());
+            dto.setCreatedAt(p.getCreatedAt() != null ? p.getCreatedAt().toString() : null);
+            return dto;
+        }).toList();
+        return ResponseEntity.ok(dtos);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<ProjectDetailDTO> getProjectDetails(@PathVariable UUID id) {
@@ -171,18 +184,35 @@ public class ProjectController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/feedbacks-debug")
+    public ResponseEntity<String> feedbackDebug() {
+        System.out.println("ENTROU NO FEEDBACK-DEBUG");
+        return ResponseEntity.ok("OK-FEEDBACK-DEBUG");
+    }
 
-    @PostMapping("/{id}/feedbacks-test")
+    @PostMapping("/{id}/feedbacks")
     public ResponseEntity<ProjectDetailDTO> adicionarFeedback(
             @PathVariable UUID id,
             @RequestBody FeedbackCreateDTO req) {
+
         System.out.println("ENTROU NO FEEDBACK");
+
         Project projeto = projectService.buscarPorId(id);
         if (projeto == null) return ResponseEntity.notFound().build();
 
-        feedbackService.adicionarFeedback(projeto, null, req);
+        User autor = null;
+        if (req.getUserId() != null) {
+            autor = userRepository.findById(req.getUserId()).orElse(null);
+        }
 
-        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, null);
+        // se não achou autor, pode retornar 400 ou seguir com null se quiser permitir anônimo
+        if (autor == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        feedbackService.adicionarFeedback(projeto, autor, req);
+
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, autor);
         return ResponseEntity.ok(dto);
     }
 

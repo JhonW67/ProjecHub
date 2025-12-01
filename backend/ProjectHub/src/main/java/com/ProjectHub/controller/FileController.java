@@ -1,12 +1,9 @@
 package com.ProjectHub.controller;
 
-import jakarta.annotation.Resource;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,14 +17,16 @@ public class FileController {
         try {
             Path dir = Paths.get("uploads/banners").toAbsolutePath().normalize();
             Path filePath = dir.resolve(fileName).normalize();
-            UrlResource resource = new UrlResource(filePath.toUri());
-            if (!resource.exists()) {
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (!resource.exists() || !resource.isReadable()) {
                 return ResponseEntity.notFound().build();
             }
-            return ResponseEntity.ok().body((Resource) resource);
+
+            return ResponseEntity.ok(resource);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(500).build();
         }
     }
 }
-
