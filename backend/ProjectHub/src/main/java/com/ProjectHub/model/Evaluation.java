@@ -1,10 +1,10 @@
 package com.ProjectHub.model;
 
-import com.ProjectHub.dto.DocumentCreateDTO;
 import jakarta.persistence.*;
 import lombok.*;
-import java.sql.Timestamp;
+
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
@@ -21,18 +21,18 @@ public class Evaluation {
     private UUID evaluationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_id")
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "evaluator_id")
-    private User evaluator;
+    @JoinColumn(name = "evaluator_id", nullable = false)
+    private User professor;                 // nome alinhado com o resto
 
-    @Column(precision = 3, scale = 2)
-    private BigDecimal score;
+    @Column(name = "score")
+    private Integer grade;              // nota
 
-    @Column(columnDefinition = "text")
-    private String comments;
+    @Column(name = "comments", columnDefinition = "text")
+    private String comment;                // comentário
 
     @Column(name = "visible_to_students")
     private boolean visibleToStudents;
@@ -40,24 +40,4 @@ public class Evaluation {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-    public UUID getId() { return evaluationId; }
-    public User getAuthor() { return evaluator; }
-    public String getComment() { return comments; }
-
-    public BigDecimal getGrade() { return score;
-    }
-
-    public User getProfessor() { return  evaluator;
-    }
-
-    public void setProfessor(User professor) {
-    }
-
-    public void setGrade(Integer grade) {
-    }
-
-    public void setComment(String comment) {
-
-    }
 }
-

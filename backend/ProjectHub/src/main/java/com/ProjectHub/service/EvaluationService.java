@@ -8,6 +8,7 @@ import com.ProjectHub.repository.EvaluationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,23 +22,10 @@ public class EvaluationService {
         Evaluation eval = evaluationRepository.findByProject(projeto).orElse(new Evaluation());
         eval.setProject(projeto);
         eval.setProfessor(professor);
-        eval.setGrade(req.getGrade());
+        eval.setGrade(req.getGrade());      // agora grade é Integer nos dois lados
         eval.setComment(req.getComment());
         return evaluationRepository.save(eval);
     }
 
-    public Evaluation buscarPorId(UUID id) {
-        return null;
-    }
 
-    public Evaluation salvar(Evaluation obj) {
-        return null;
-    }
-
-    public void deletar(UUID id) {
-    }
-
-    public List<Evaluation> listarTodos() {
-        return null;
-    }
 }

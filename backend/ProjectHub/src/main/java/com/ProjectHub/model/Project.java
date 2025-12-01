@@ -67,8 +67,9 @@ public class Project {
     @Column(name="qr_code_url")
     private String qrCodeUrl;
 
-    @Getter
-    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    @OneToOne(mappedBy = "project", fetch = FetchType.LAZY)
     private Evaluation evaluation;
+
 
 }

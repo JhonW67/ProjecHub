@@ -13,10 +13,15 @@ public class ProjectMapper {
 
     public ProjectDetailDTO toDetailDto(Project project, User requester) {
         boolean isAdmin = requester != null && "admin".equalsIgnoreCase(requester.getRole());
-        boolean isMember = requester != null && project.getMembers()
-                .stream()
-                .anyMatch(m -> m.getUser().getUserId().equals(requester.getUserId()));
+        boolean isMember = false;
+        boolean isTeacher = false;
 
+        if (requester != null) {
+            isMember = project.getMembers()
+                    .stream()
+                    .anyMatch(m -> m.getUser().getUserId().equals(requester.getUserId()));
+            isTeacher = "teacher".equalsIgnoreCase(requester.getRole());
+        }
 
         ProjectDetailDTO dto = new ProjectDetailDTO();
         dto.setProjectId(project.getProjectId());
@@ -64,17 +69,18 @@ public class ProjectMapper {
         dto.setQrCodeUrl(project.getQrCodeUrl());
 
         // Avaliação
-        if (isAdmin || isMember) {
-            if (project.getEvaluation() != null) {
-                Evaluation eval = project.getEvaluation();
+        boolean canSeeEvaluation = isAdmin || isMember || isTeacher;
+        if (canSeeEvaluation && project.getEvaluation() != null) {
+            Evaluation eval = project.getEvaluation();
+            if (eval.getProfessor() != null) {
                 dto.setEvaluation(new EvaluationDTO(
                         eval.getGrade(),
-                        eval.getComment(),
+                            eval.getComment(),
                         eval.getProfessor().getName()
                 ));
             }
-
         }
+
         dto.setCanEdit(isAdmin || isMember);
         return dto;
     }

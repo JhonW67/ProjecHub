@@ -60,7 +60,7 @@ public class ProjectController {
         return ResponseEntity.ok(dtos);
     }
 
-
+/*
     @GetMapping("/{id}")
     public ResponseEntity<ProjectDetailDTO> getProjectDetails(@PathVariable UUID id) {
         Project project = projectService.buscarPorId(id);
@@ -72,7 +72,7 @@ public class ProjectController {
         ProjectDetailDTO dto = projectMapper.toDetailDto(project, null);
         return ResponseEntity.ok(dto);
     }
-
+*/
 
     @PostMapping
     public ResponseEntity<Project> criar(@RequestBody Project project, @AuthenticationPrincipal UserDetails userDetails) {
@@ -83,6 +83,21 @@ public class ProjectController {
         Project salvo = projectService.salvar(project, creator);
         return ResponseEntity.ok(salvo);
     }
+
+
+    // ProjectController - detalhe do projeto
+    @GetMapping("/{id}")
+    public ResponseEntity<ProjectDetailDTO> buscarProjeto(@PathVariable UUID id) {
+        Project projeto = projectService.buscarPorId(id);
+        if (projeto == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // não usamos requester por enquanto
+        ProjectDetailDTO dto = projectMapper.toDetailDto(projeto, null);
+        return ResponseEntity.ok(dto);
+    }
+
 
 
     @PutMapping("/{id}")
@@ -254,18 +269,22 @@ public class ProjectController {
     @PostMapping("/{id}/evaluation")
     public ResponseEntity<ProjectDetailDTO> salvarAvaliacao(
             @PathVariable UUID id,
-            @RequestBody EvaluationCreateDTO req,
-            @AuthenticationPrincipal UserDetails userDetails) {
+            @RequestBody EvaluationCreateDTO req) {
 
-        if (userDetails == null) return ResponseEntity.status(401).build();
+        System.out.println("EVAL userId = " + req.getUserId());
 
         Project projeto = projectService.buscarPorId(id);
         if (projeto == null) return ResponseEntity.notFound().build();
 
-        User professor = userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+        if (req.getUserId() == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        User professor = userRepository.findById(req.getUserId()).orElse(null);
+        System.out.println("Professor encontrado: " + (professor != null ? professor.getName() : "null"));
+
         if (professor == null) return ResponseEntity.status(401).build();
 
-        // regra simples: só professor pode avaliar
         if (!"teacher".equalsIgnoreCase(professor.getRole()) &&
                 !"admin".equalsIgnoreCase(professor.getRole())) {
             return ResponseEntity.status(403).build();

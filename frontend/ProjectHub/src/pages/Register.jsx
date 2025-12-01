@@ -183,7 +183,7 @@ const Register = () => {
                       value={selectedSemester}
                       options={semesters}
                       onChange={e => setSelectedSemester(e.value)}
-                      optionLabel={option => `Semestre ${option.number}`}
+                      optionLabel={option => `Semestre ${option.number} - ${option.year}`}
                       optionValue="semesterId"
                       placeholder="Selecione o semestre"
                       style={{ marginBottom: '1rem' }}

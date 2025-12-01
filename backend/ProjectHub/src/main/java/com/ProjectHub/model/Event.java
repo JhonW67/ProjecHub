@@ -40,5 +40,8 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties("event")
     private List<Project> projects;
+
+    public Event(Object o, String s, String s1, String i, boolean b) {
+    }
 }
 

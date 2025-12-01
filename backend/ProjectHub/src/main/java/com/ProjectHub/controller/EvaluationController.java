@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+/*@RestController
 @RequestMapping("/api/evaluations")
 public class EvaluationController {
 
@@ -53,3 +53,4 @@ public class EvaluationController {
         return ResponseEntity.noContent().build();
     }
 }
+*/
